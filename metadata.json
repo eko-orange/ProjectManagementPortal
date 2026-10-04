@@ -1,0 +1,6 @@
+{
+  "name": "PaceUP!",
+  "description": "メインメニューから概算見積管理、プロジェクト進捗管理（WBS/ガント/イナズマ線/Step数・生産性）、担当者マスタ（CSV入出力）を統合管理。見積からプロジェクトへのワンクリック連携に対応。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
