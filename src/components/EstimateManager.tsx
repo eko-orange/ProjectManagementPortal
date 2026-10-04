@@ -26,6 +26,7 @@ import {
   Home,
   Check,
   X,
+  Workflow,
 } from 'lucide-react';
 import { Estimate, Member, Project } from '../types';
 import { exportEstimatesToCsv, parseEstimatesCsv, downloadEstimatesTemplateCsv } from '../utils/csvHelper';
@@ -65,6 +66,8 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
   const [expandedEstimateIds, setExpandedEstimateIds] = useState<Record<string, boolean>>({
     [estimates[0]?.id || '']: true,
   });
+  // 機能ごとの工程アコーディオン展開状態
+  const [expandedFeatureProcesses, setExpandedFeatureProcesses] = useState<Record<string, boolean>>({});
 
   // 削除確認
   const [estimateToDelete, setEstimateToDelete] = useState<Estimate | null>(null);
@@ -82,6 +85,13 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
     setExpandedEstimateIds((prev) => ({
       ...prev,
       [id]: !prev[id],
+    }));
+  };
+
+  const handleToggleFeatureProcesses = (featureKey: string) => {
+    setExpandedFeatureProcesses((prev) => ({
+      ...prev,
+      [featureKey]: !prev[featureKey],
     }));
   };
 
@@ -670,6 +680,7 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                               <th className="py-2 px-3 w-8 text-center">#</th>
                               <th className="py-2 px-3">機能名</th>
                               <th className="py-2 px-2 w-28">カテゴリ</th>
+                              <th className="py-2 px-2 w-32">担当者</th>
                               <th className="py-2 px-2 w-24 text-right">Step数</th>
                               <th className="py-2 px-2 w-24 text-right">概算工数</th>
                               <th className="py-2 px-2 w-28 text-right">想定生産性</th>
@@ -682,41 +693,196 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                               const fProd = f.estimatedWorkload > 0 && f.stepCount && f.stepCount > 0
                                 ? Math.round((f.stepCount / f.estimatedWorkload) * 10) / 10
                                 : null;
+                              const featureKey = `${estimate.id}-${f.id || idx}`;
+                              const hasProcesses = Array.isArray(f.processes) && f.processes.length > 0;
+                              const isProcExpanded = Boolean(expandedFeatureProcesses[featureKey]);
+
                               return (
-                                <tr key={f.id || idx} className="hover:bg-slate-50/70">
-                                  <td className="py-2 px-3 text-center text-slate-400 font-mono text-[11px]">
-                                    {idx + 1}
-                                  </td>
-                                  <td className="py-2 px-3 font-semibold text-slate-800">
-                                    {f.name}
-                                  </td>
-                                  <td className="py-2 px-2 text-slate-600">
-                                    <span className="px-1.5 py-0.5 rounded bg-slate-100 text-[10px] text-slate-600">
-                                      {f.category || '一般機能'}
-                                    </span>
-                                  </td>
-                                  <td className="py-2 px-2 text-right font-mono font-bold text-indigo-700">
-                                    {f.stepCount !== undefined ? f.stepCount.toLocaleString() : '-'}
-                                  </td>
-                                  <td className="py-2 px-2 text-right font-mono font-semibold text-slate-800">
-                                    {f.estimatedWorkload} {estimate.workloadUnit}
-                                  </td>
-                                  <td className="py-2 px-2 text-right font-mono text-[11px]">
-                                    {fProd ? (
-                                      <span className="font-bold text-emerald-700">
-                                        {fProd} <span className="text-[10px] text-slate-400 font-normal">S/{estimate.workloadUnit}</span>
+                                <React.Fragment key={featureKey}>
+                                  <tr className={`hover:bg-slate-50/70 transition-colors ${isProcExpanded ? 'bg-indigo-50/20' : ''}`}>
+                                    <td className="py-2.5 px-3 text-center text-slate-400 font-mono text-[11px] align-top">
+                                      {idx + 1}
+                                    </td>
+                                    <td className="py-2.5 px-3 align-top">
+                                      <div className="space-y-1">
+                                        <div className="font-semibold text-slate-800">
+                                          {f.name}
+                                        </div>
+                                        <div className="flex items-center gap-1.5 flex-wrap">
+                                          {hasProcesses ? (
+                                            <button
+                                              type="button"
+                                              onClick={() => handleToggleFeatureProcesses(featureKey)}
+                                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold transition-colors cursor-pointer ${
+                                                isProcExpanded
+                                                  ? 'bg-indigo-100 text-indigo-900 border border-indigo-300'
+                                                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/80'
+                                              }`}
+                                              title="工程の内訳を表示・非表示"
+                                            >
+                                              {isProcExpanded ? (
+                                                <ChevronDown className="w-3 h-3 text-indigo-600" />
+                                              ) : (
+                                                <ChevronRight className="w-3 h-3 text-indigo-600" />
+                                              )}
+                                              <span>工程内訳 ({f.processes!.length}工程)</span>
+                                            </button>
+                                          ) : (
+                                            <button
+                                              type="button"
+                                              onClick={() => onOpenEditModal(estimate)}
+                                              className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-100 hover:bg-indigo-50 text-[10px] text-slate-600 hover:text-indigo-700 border border-slate-200 transition-colors cursor-pointer"
+                                              title="工程を登録する"
+                                            >
+                                              <Plus className="w-2.5 h-2.5" />
+                                              <span>工程登録</span>
+                                            </button>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="py-2.5 px-2 text-slate-600 align-top">
+                                      <span className="px-1.5 py-0.5 rounded bg-slate-100 text-[10px] text-slate-600">
+                                        {f.category || '一般機能'}
                                       </span>
-                                    ) : (
-                                      <span className="text-slate-400">-</span>
-                                    )}
-                                  </td>
-                                  <td className="py-2 px-3 text-right font-mono font-bold text-slate-900">
-                                    ¥{(f.estimatedAmount || f.estimatedWorkload * estimate.unitPrice).toLocaleString()}
-                                  </td>
-                                  <td className="py-2 px-3 text-slate-500 text-[11px] truncate max-w-[200px]" title={f.description || ''}>
-                                    {f.description || '-'}
-                                  </td>
-                                </tr>
+                                    </td>
+                                    <td className="py-2.5 px-2 align-top">
+                                      {f.assignee ? (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-medium text-[11px] border border-indigo-200/60">
+                                          <User className="w-3 h-3 text-indigo-500" />
+                                          <span>{f.assignee}</span>
+                                        </span>
+                                      ) : (
+                                        <span className="text-slate-400 text-[11px]">未設定</span>
+                                      )}
+                                    </td>
+                                    <td className="py-2.5 px-2 text-right font-mono font-bold text-indigo-700 align-top">
+                                      {f.stepCount !== undefined ? f.stepCount.toLocaleString() : '-'}
+                                    </td>
+                                    <td className="py-2.5 px-2 text-right align-top">
+                                      <div className="font-mono font-bold text-slate-800">
+                                        {f.estimatedWorkload} <span className="text-[10px] font-normal text-slate-500">{estimate.workloadUnit}</span>
+                                      </div>
+                                      {hasProcesses && (
+                                        <span className="text-[10px] text-indigo-600 font-semibold block">
+                                          工程合計
+                                        </span>
+                                      )}
+                                    </td>
+                                    <td className="py-2.5 px-2 text-right font-mono text-[11px] align-top">
+                                      {fProd ? (
+                                        <span className="font-bold text-emerald-700">
+                                          {fProd} <span className="text-[10px] text-slate-400 font-normal">S/{estimate.workloadUnit}</span>
+                                        </span>
+                                      ) : (
+                                        <span className="text-slate-400">-</span>
+                                      )}
+                                    </td>
+                                    <td className="py-2.5 px-3 text-right font-mono font-bold text-slate-900 align-top">
+                                      ¥{(f.estimatedAmount || f.estimatedWorkload * estimate.unitPrice).toLocaleString()}
+                                    </td>
+                                    <td className="py-2.5 px-3 text-slate-500 text-[11px] truncate max-w-[200px] align-top" title={f.description || ''}>
+                                      {f.description || '-'}
+                                    </td>
+                                  </tr>
+
+                                  {/* 工程一覧の展開表示 */}
+                                  {isProcExpanded && hasProcesses && (
+                                    <tr className="bg-slate-50/80 border-b border-indigo-100">
+                                      <td colSpan={9} className="p-3 pl-8 pr-4">
+                                        <div className="bg-white rounded-lg border border-indigo-200 overflow-hidden shadow-2xs">
+                                          <div className="px-3.5 py-2 bg-gradient-to-r from-indigo-50/80 to-slate-50 border-b border-indigo-100 flex items-center justify-between text-xs">
+                                            <div className="flex items-center gap-2">
+                                              <Workflow className="w-3.5 h-3.5 text-indigo-600" />
+                                              <span className="font-bold text-slate-800">
+                                                【{f.name}】登録工程内訳
+                                              </span>
+                                              <span className="text-[10px] font-mono text-indigo-700 bg-indigo-100/80 px-2 py-0.5 rounded-full font-bold">
+                                                {f.processes!.length}工程
+                                              </span>
+                                            </div>
+                                            <div className="text-[11px] text-slate-600">
+                                              各工程の合計: <strong className="font-mono text-indigo-900 text-xs">{f.estimatedWorkload}</strong> {estimate.workloadUnit}
+                                            </div>
+                                          </div>
+
+                                          <table className="w-full text-left text-xs border-collapse">
+                                            <thead className="bg-slate-50/60 border-b border-slate-200 text-slate-600 text-[11px]">
+                                              <tr>
+                                                <th className="py-1.5 px-3 w-8 text-center">#</th>
+                                                <th className="py-1.5 px-3">工程名</th>
+                                                <th className="py-1.5 px-2 w-32">工程担当者</th>
+                                                <th className="py-1.5 px-2 w-28 text-right">工数 ({estimate.workloadUnit})</th>
+                                                <th className="py-1.5 px-2 w-28 text-right">単価</th>
+                                                <th className="py-1.5 px-3 w-28 text-right">概算金額</th>
+                                                <th className="py-1.5 px-3">備考</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-slate-100 text-[11px]">
+                                              {f.processes!.map((p, pIdx) => (
+                                                <tr key={p.id || pIdx} className="hover:bg-slate-50/60">
+                                                  <td className="py-1.5 px-3 text-center text-slate-400 font-mono">
+                                                    {pIdx + 1}
+                                                  </td>
+                                                  <td className="py-1.5 px-3 font-medium text-slate-800">
+                                                    {p.name}
+                                                  </td>
+                                                  <td className="py-1.5 px-2">
+                                                    {p.assignee ? (
+                                                      <span className="inline-flex items-center gap-1 text-slate-700">
+                                                        <User className="w-2.5 h-2.5 text-indigo-500" />
+                                                        <span>{p.assignee}</span>
+                                                      </span>
+                                                    ) : (
+                                                      <span className="text-slate-400">未設定</span>
+                                                    )}
+                                                  </td>
+                                                  <td className="py-1.5 px-2 text-right font-mono font-bold text-indigo-700">
+                                                    {p.workload} {estimate.workloadUnit}
+                                                  </td>
+                                                  <td className="py-1.5 px-2 text-right font-mono text-slate-600">
+                                                    ¥{(p.unitPrice || f.unitPrice || estimate.unitPrice).toLocaleString()}
+                                                  </td>
+                                                  <td className="py-1.5 px-3 text-right font-mono font-semibold text-slate-900">
+                                                    ¥{(p.amount || Math.round(p.workload * (p.unitPrice || f.unitPrice || estimate.unitPrice))).toLocaleString()}
+                                                  </td>
+                                                  <td className="py-1.5 px-3 text-slate-500 truncate max-w-[200px]" title={p.notes || ''}>
+                                                    {p.notes || '-'}
+                                                  </td>
+                                                </tr>
+                                              ))}
+                                            </tbody>
+                                            <tfoot className="bg-slate-50 border-t border-slate-200 text-xs font-bold text-slate-800">
+                                              <tr>
+                                                <td colSpan={3} className="py-1.5 px-3 text-right text-slate-600">
+                                                  各工程の工数合計:
+                                                </td>
+                                                <td className="py-1.5 px-2 text-right font-mono text-indigo-700">
+                                                  {f.estimatedWorkload} {estimate.workloadUnit}
+                                                </td>
+                                                <td className="py-1.5 px-2 text-right text-slate-500 text-[11px]">
+                                                  金額合計:
+                                                </td>
+                                                <td className="py-1.5 px-3 text-right font-mono text-indigo-950">
+                                                  ¥{(f.estimatedAmount || 0).toLocaleString()}
+                                                </td>
+                                                <td className="py-1.5 px-3 text-right">
+                                                  <button
+                                                    type="button"
+                                                    onClick={() => onOpenEditModal(estimate)}
+                                                    className="text-[10px] text-indigo-600 hover:text-indigo-800 hover:underline cursor-pointer"
+                                                  >
+                                                    見積編集で変更
+                                                  </button>
+                                                </td>
+                                              </tr>
+                                            </tfoot>
+                                          </table>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  )}
+                                </React.Fragment>
                               );
                             })}
                           </tbody>

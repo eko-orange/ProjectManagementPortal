@@ -235,7 +235,7 @@ app.delete('/api/projects/:id', (req, res) => {
   // 見積管理との連携がある場合でも、見積データ自体は削除しない（紐付け情報のみ解除しステータスを受注承認済に戻す）
   if (Array.isArray(currentStore.estimates)) {
     currentStore.estimates = currentStore.estimates.map((est) => {
-      if (est.linkedProjectId === id) {
+      if (est.linkedProjectId === id || (projectToDelete.estimateId && est.id === projectToDelete.estimateId)) {
         return {
           ...est,
           linkedProjectId: undefined,
@@ -828,22 +828,44 @@ app.post('/api/estimates/:id/link-project', (req, res) => {
       const totalPatDays = defaultPattern.processes.reduce((sum, p) => sum + (p.defaultDays || 1), 0);
       const featureAssignee = ef.assignee?.trim() || '';
 
-      const initialProcs = defaultPattern.processes.map((patProc, pIdx) => {
-        const ratio = (patProc.defaultDays || 1) / (totalPatDays || 1);
-        const workload = Math.max(0.5, Math.round((ef.estimatedWorkload || 10) * ratio * 10) / 10);
-        return {
-          id: `proc-${featId}-${pIdx + 1}`,
-          featureId: featId,
-          processType: patProc.name,
-          assignee: featureAssignee, // 見積で指定された担当者を各工程に適用
-          plannedWorkload: workload,
-          actualWorkload: 0,
-          startDate: projectStartDate,
-          endDate: projectStartDate,
-          actualProgress: 0,
-          notes: patProc.description || '',
-        };
-      });
+      let initialProcs: any[] = [];
+      if (Array.isArray(ef.processes) && ef.processes.length > 0) {
+        // 見積で登録された工程をそのままWBS工程として採用
+        initialProcs = ef.processes.map((ep, pIdx) => {
+          const procAssignee = (ep.assignee || featureAssignee || '').trim();
+          const procWorkload = Math.max(0.1, Number(ep.workload) || 1);
+          return {
+            id: `proc-${featId}-${pIdx + 1}`,
+            featureId: featId,
+            processType: ep.name || '実装',
+            assignee: procAssignee,
+            plannedWorkload: procWorkload,
+            actualWorkload: 0,
+            startDate: projectStartDate,
+            endDate: projectStartDate,
+            actualProgress: 0,
+            notes: ep.notes || '',
+          };
+        });
+      } else {
+        const totalPatDays = defaultPattern.processes.reduce((sum, p) => sum + (p.defaultDays || 1), 0);
+        initialProcs = defaultPattern.processes.map((patProc, pIdx) => {
+          const ratio = (patProc.defaultDays || 1) / (totalPatDays || 1);
+          const workload = Math.max(0.5, Math.round((ef.estimatedWorkload || 10) * ratio * 10) / 10);
+          return {
+            id: `proc-${featId}-${pIdx + 1}`,
+            featureId: featId,
+            processType: patProc.name,
+            assignee: featureAssignee, // 見積で指定された担当者を各工程に適用
+            plannedWorkload: workload,
+            actualWorkload: 0,
+            startDate: projectStartDate,
+            endDate: projectStartDate,
+            actualProgress: 0,
+            notes: patProc.description || '',
+          };
+        });
+      }
 
       // 開始日から各担当者の開始日〜終了日を自動スケジュール
       const schedResult = autoScheduleProcesses(

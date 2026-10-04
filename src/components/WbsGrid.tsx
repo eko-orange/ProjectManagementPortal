@@ -73,6 +73,7 @@ interface WbsGridProps {
   onDeleteProcess?: (projectId: string, featureId: string, processId: string) => void;
   onOpenAddFeature?: (projectId?: string) => void;
   onOpenEditProject?: (project: Project) => void;
+  onDeleteProject?: (project: Project) => void;
   members?: Member[];
   onOpenAutoSchedule?: (feature: Feature, project: Project) => void;
   onAutoSchedule?: (feature: Feature, project: Project) => void;
@@ -113,6 +114,7 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
   onDeleteProcess,
   onOpenAddFeature,
   onOpenEditProject,
+  onDeleteProject,
   members = [],
   onOpenAutoSchedule,
   onAutoSchedule,
@@ -1159,6 +1161,16 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                               title="このプロジェクトに機能を追加"
                             >
                               <Plus className="w-3 h-3" />
+                            </button>
+                          )}
+                          {onDeleteProject && (
+                            <button
+                              type="button"
+                              onClick={() => onDeleteProject(proj)}
+                              className="p-1 hover:bg-rose-900/80 rounded text-rose-400 hover:text-rose-200 cursor-pointer transition-colors"
+                              title="プロジェクトを進捗管理から削除（見積管理の見積データは保持されます）"
+                            >
+                              <Trash2 className="w-3 h-3" />
                             </button>
                           )}
                         </div>

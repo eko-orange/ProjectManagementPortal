@@ -965,6 +965,13 @@ export function exportEstimatesToCsv(estimates: Estimate[]): void {
       );
     } else {
       est.features.forEach((f) => {
+        const procSummary = Array.isArray(f.processes) && f.processes.length > 0
+          ? f.processes.map((p) => `${p.name}:${p.workload}${est.workloadUnit}${p.assignee ? `[${p.assignee}]` : ''}`).join(' / ')
+          : '';
+        const combinedDesc = procSummary
+          ? (f.description ? `${f.description} (工程内訳: ${procSummary})` : `工程内訳: ${procSummary}`)
+          : (f.description || est.notes || '');
+
         rows.push(
           [
             `"${est.estimateNumber}"`,
@@ -983,7 +990,7 @@ export function exportEstimatesToCsv(estimates: Estimate[]): void {
             f.stepCount !== undefined ? f.stepCount : '',
             f.estimatedWorkload,
             f.estimatedAmount || f.estimatedWorkload * (f.unitPrice || est.unitPrice),
-            `"${(f.description || est.notes || '').replace(/"/g, '""')}"`,
+            `"${combinedDesc.replace(/"/g, '""')}"`,
             `"${linkInfo}"`,
           ].join(',')
         );

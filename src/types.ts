@@ -67,17 +67,29 @@ export type MainMenuView = 'wbs' | 'estimates' | 'members';
 
 export type EstimateStatus = 'draft' | 'submitted' | 'approved' | 'rejected' | 'linked';
 
+// 見積機能内の個別工程定義
+export interface EstimateProcess {
+  id: string;
+  name: string;            // 工程名（要件定義、設計、実装、テストなど）
+  workload: number;        // 工数（人日または人時）
+  assignee?: string;       // 工程担当者（未設定時は機能担当者または未設定）
+  unitPrice?: number;      // 個別単価（未設定時は機能または見積単価）
+  amount?: number;         // 金額（工数×単価）
+  notes?: string;          // 備考
+}
+
 export interface EstimateFeature {
   id: string;
   name: string;               // 機能名
   category?: string;          // カテゴリ/モジュール
   stepCount?: number;         // 想定Step数
-  estimatedWorkload: number;  // 概算予定工数（人日または人時）
+  estimatedWorkload: number;  // 概算予定工数（人日または人時。工程がある場合は各工程の工数合計）
   assignee?: string;          // 担当者（担当者マスタから選任可能）
   unitPrice?: number;         // 個別単価（未設定時は担当者マスタ単価または見積全体の単価を適用）
   estimatedAmount?: number;   // 概算金額（工数×単価の自動計算）
   description?: string;       // 概要・前提条件
   processPatternId?: string;  // 適用した工程構成パターンID
+  processes?: EstimateProcess[]; // 機能に紐付く登録工程一覧
 }
 
 export interface Estimate {

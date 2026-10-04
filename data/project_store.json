@@ -1,6 +1,476 @@
 {
   "projects": [
     {
+      "id": "proj-1791100674066",
+      "name": "ええええ",
+      "manager": "下釜",
+      "description": "未指定顧客向け見積(EST-2026-005)より進捗管理へ連携",
+      "createdAt": "2026-10-04",
+      "updatedAt": "2026-10-04",
+      "estimateId": "est-1791100673195",
+      "estimateNumber": "EST-2026-005",
+      "estimateTitle": "ええええ",
+      "settings": {
+        "projectName": "ええええ",
+        "manager": "下釜",
+        "workloadUnit": "人日",
+        "hoursPerDay": 8,
+        "baselineDate": "2026-10-04",
+        "showLightningLine": true,
+        "showBurnDown": false,
+        "zoomLevel": "day",
+        "weeklyMeetingHours": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 1,
+          "5": 0,
+          "6": 0
+        }
+      },
+      "features": [
+        {
+          "id": "feat-proj-1791100674066-1",
+          "projectId": "proj-1791100674066",
+          "name": "１",
+          "category": "一般機能",
+          "isExpanded": true,
+          "estimateFeatureId": "est-f-1791100653133-1",
+          "processes": [
+            {
+              "id": "proc-feat-proj-1791100674066-1-1",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "設計",
+              "assignee": "江口",
+              "plannedWorkload": 2.2,
+              "actualWorkload": 0,
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-07",
+              "actualProgress": 0,
+              "notes": "仕様書作成・画面設計・詳細設計"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-1-2",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "設計レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-10-07",
+              "endDate": "2026-10-08",
+              "actualProgress": 0,
+              "notes": "仕様レビュー・設計書承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-1-3",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "実装",
+              "assignee": "江口",
+              "plannedWorkload": 3.5,
+              "actualWorkload": 0,
+              "startDate": "2026-10-08",
+              "endDate": "2026-10-14",
+              "actualProgress": 0,
+              "notes": "機能の実装・プログラミング"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-1-4",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "実装レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-10-14",
+              "endDate": "2026-10-15",
+              "actualProgress": 0,
+              "notes": "コードレビュー・プルリク承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-1-5",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "単体テスト",
+              "assignee": "江口",
+              "plannedWorkload": 1.7,
+              "actualWorkload": 0,
+              "startDate": "2026-10-15",
+              "endDate": "2026-10-19",
+              "actualProgress": 0,
+              "notes": "テストコード作成・単体検証"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-1-6",
+              "featureId": "feat-proj-1791100674066-1",
+              "processType": "単体テストレビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-10-19",
+              "endDate": "2026-10-20",
+              "actualProgress": 0,
+              "notes": "テスト結果検証・エビデンス確認"
+            }
+          ]
+        },
+        {
+          "id": "feat-proj-1791100674066-2",
+          "projectId": "proj-1791100674066",
+          "name": "２",
+          "category": "一般機能",
+          "isExpanded": true,
+          "estimateFeatureId": "est-f-1791100660123-2",
+          "processes": [
+            {
+              "id": "proc-feat-proj-1791100674066-2-1",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "設計",
+              "assignee": "江口",
+              "plannedWorkload": 2.2,
+              "actualWorkload": 0,
+              "startDate": "2026-10-20",
+              "endDate": "2026-10-22",
+              "actualProgress": 0,
+              "notes": "仕様書作成・画面設計・詳細設計"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-2-2",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "設計レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-10-22",
+              "endDate": "2026-10-23",
+              "actualProgress": 0,
+              "notes": "仕様レビュー・設計書承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-2-3",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "実装",
+              "assignee": "江口",
+              "plannedWorkload": 3.5,
+              "actualWorkload": 0,
+              "startDate": "2026-10-23",
+              "endDate": "2026-10-28",
+              "actualProgress": 0,
+              "notes": "機能の実装・プログラミング"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-2-4",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "実装レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-10-28",
+              "endDate": "2026-10-29",
+              "actualProgress": 0,
+              "notes": "コードレビュー・プルリク承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-2-5",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "単体テスト",
+              "assignee": "江口",
+              "plannedWorkload": 1.7,
+              "actualWorkload": 0,
+              "startDate": "2026-10-29",
+              "endDate": "2026-11-02",
+              "actualProgress": 0,
+              "notes": "テストコード作成・単体検証"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-2-6",
+              "featureId": "feat-proj-1791100674066-2",
+              "processType": "単体テストレビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-11-02",
+              "endDate": "2026-11-04",
+              "actualProgress": 0,
+              "notes": "テスト結果検証・エビデンス確認"
+            }
+          ]
+        },
+        {
+          "id": "feat-proj-1791100674066-3",
+          "projectId": "proj-1791100674066",
+          "name": "３",
+          "category": "一般機能",
+          "isExpanded": true,
+          "estimateFeatureId": "est-f-1791100664204-3",
+          "processes": [
+            {
+              "id": "proc-feat-proj-1791100674066-3-1",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "設計",
+              "assignee": "江口",
+              "plannedWorkload": 2.2,
+              "actualWorkload": 0,
+              "startDate": "2026-11-04",
+              "endDate": "2026-11-06",
+              "actualProgress": 0,
+              "notes": "仕様書作成・画面設計・詳細設計"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-3-2",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "設計レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-11-06",
+              "endDate": "2026-11-09",
+              "actualProgress": 0,
+              "notes": "仕様レビュー・設計書承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-3-3",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "実装",
+              "assignee": "江口",
+              "plannedWorkload": 3.5,
+              "actualWorkload": 0,
+              "startDate": "2026-11-09",
+              "endDate": "2026-11-12",
+              "actualProgress": 0,
+              "notes": "機能の実装・プログラミング"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-3-4",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "実装レビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-11-12",
+              "endDate": "2026-11-13",
+              "actualProgress": 0,
+              "notes": "コードレビュー・プルリク承認"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-3-5",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "単体テスト",
+              "assignee": "江口",
+              "plannedWorkload": 1.7,
+              "actualWorkload": 0,
+              "startDate": "2026-11-13",
+              "endDate": "2026-11-17",
+              "actualProgress": 0,
+              "notes": "テストコード作成・単体検証"
+            },
+            {
+              "id": "proc-feat-proj-1791100674066-3-6",
+              "featureId": "feat-proj-1791100674066-3",
+              "processType": "単体テストレビュー",
+              "assignee": "江口",
+              "plannedWorkload": 0.9,
+              "actualWorkload": 0,
+              "startDate": "2026-11-17",
+              "endDate": "2026-11-18",
+              "actualProgress": 0,
+              "notes": "テスト結果検証・エビデンス確認"
+            }
+          ]
+        }
+      ],
+      "holidays": [
+        {
+          "id": "h-2026-01-01",
+          "date": "2026-01-01",
+          "name": "元日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-01-12",
+          "date": "2026-01-12",
+          "name": "成人の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-02-11",
+          "date": "2026-02-11",
+          "name": "建国記念の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-02-23",
+          "date": "2026-02-23",
+          "name": "天皇誕生日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-03-20",
+          "date": "2026-03-20",
+          "name": "春分の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-04-29",
+          "date": "2026-04-29",
+          "name": "昭和の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-05-03",
+          "date": "2026-05-03",
+          "name": "憲法記念日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-05-04",
+          "date": "2026-05-04",
+          "name": "みどりの日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-05-05",
+          "date": "2026-05-05",
+          "name": "こどもの日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-05-06",
+          "date": "2026-05-06",
+          "name": "振替休日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-07-20",
+          "date": "2026-07-20",
+          "name": "海の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-08-11",
+          "date": "2026-08-11",
+          "name": "山の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-08-13",
+          "date": "2026-08-13",
+          "name": "夏季休業",
+          "type": "company"
+        },
+        {
+          "id": "h-2026-08-14",
+          "date": "2026-08-14",
+          "name": "夏季休業",
+          "type": "company"
+        },
+        {
+          "id": "h-2026-09-15",
+          "date": "2026-09-15",
+          "name": "会社創立記念日",
+          "type": "company"
+        },
+        {
+          "id": "h-2026-09-21",
+          "date": "2026-09-21",
+          "name": "敬老の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-09-22",
+          "date": "2026-09-22",
+          "name": "国民の休日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-09-23",
+          "date": "2026-09-23",
+          "name": "秋分の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-10-12",
+          "date": "2026-10-12",
+          "name": "スポーツの日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-11-03",
+          "date": "2026-11-03",
+          "name": "文化の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-11-23",
+          "date": "2026-11-23",
+          "name": "勤労感謝の日",
+          "type": "national"
+        },
+        {
+          "id": "h-2026-12-29",
+          "date": "2026-12-29",
+          "name": "年末年始休業",
+          "type": "company"
+        },
+        {
+          "id": "h-2026-12-30",
+          "date": "2026-12-30",
+          "name": "年末年始休業",
+          "type": "company"
+        },
+        {
+          "id": "h-2026-12-31",
+          "date": "2026-12-31",
+          "name": "年末年始休業",
+          "type": "company"
+        }
+      ],
+      "members": [
+        {
+          "id": "mem-imp-1791100644526-hri0n",
+          "name": "下釜",
+          "role": "課長",
+          "department": "ソリューションシステム本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 60000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-imp-1791100644526-5g1uo",
+          "name": "江口",
+          "role": "主任",
+          "department": "ソリューションシステム本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 55000,
+          "individualHolidays": [
+            {
+              "id": "ih-imp-2026-09-24-ahc8",
+              "date": "2026-09-24",
+              "name": "有給休暇"
+            },
+            {
+              "id": "ih-imp-2026-10-01-tclj",
+              "date": "2026-10-01",
+              "name": "有給休暇"
+            },
+            {
+              "id": "ih-imp-2026-10-02-c37a",
+              "date": "2026-10-02",
+              "name": "有給休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-imp-1791100644526-o74i3",
+          "name": "竹道",
+          "role": "担当",
+          "department": "ソリューションシステム本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
+          "individualHolidays": []
+        }
+      ],
+      "snapshots": []
+    },
+    {
       "id": "proj-1",
       "name": "基幹ECリニューアルプロジェクト",
       "manager": "田中 敏夫",
@@ -496,120 +966,46 @@
       ],
       "members": [
         {
-          "id": "mem-10",
-          "name": "木村 宗一郎",
-          "role": "執行役員",
-          "department": "経営企画・技術戦略室",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-11",
-          "name": "渡辺 浩司",
-          "role": "本部長",
-          "department": "開発統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-9",
-          "name": "伊藤 修平",
-          "role": "副本部長",
-          "department": "技術統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-6",
-          "name": "田中 敏夫",
-          "role": "部長",
-          "department": "PMO推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-5",
-          "name": "山田 太郎",
+          "id": "mem-imp-1791100644526-hri0n",
+          "name": "下釜",
           "role": "課長",
-          "department": "クラウド基盤部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-1",
-          "name": "佐藤 健一",
+          "id": "mem-imp-1791100644526-5g1uo",
+          "name": "江口",
           "role": "主任",
-          "department": "基幹開発部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-1-1",
-              "date": "2026-09-25",
+              "id": "ih-imp-2026-09-24-ahc8",
+              "date": "2026-09-24",
               "name": "有給休暇"
             },
             {
-              "id": "ih-1-2",
+              "id": "ih-imp-2026-10-01-tclj",
+              "date": "2026-10-01",
+              "name": "有給休暇"
+            },
+            {
+              "id": "ih-imp-2026-10-02-c37a",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-2",
-          "name": "田中 美咲",
-          "role": "主任",
-          "department": "UI/UX開発部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-2-1",
-              "date": "2026-09-28",
-              "name": "創立記念代休"
-            }
-          ]
-        },
-        {
-          "id": "mem-3",
-          "name": "鈴木 一郎",
+          "id": "mem-imp-1791100644526-o74i3",
+          "name": "竹道",
           "role": "担当",
-          "department": "品質管理部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-3-1",
-              "date": "2026-10-05",
-              "name": "有給休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-4",
-          "name": "高橋 涼介",
-          "role": "担当",
-          "department": "基幹開発部",
-          "dailyWorkingHours": 6,
-          "individualHolidays": [
-            {
-              "id": "ih-4-1",
-              "date": "2026-09-18",
-              "name": "介護/看護休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-7",
-          "name": "小林 誠",
-          "role": "担当",
-          "department": "プロダクト推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-8",
-          "name": "山本 健太",
-          "role": "研修生",
-          "department": "品質管理部",
-          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
           "individualHolidays": []
         }
       ],
@@ -984,7 +1380,16 @@
         "baselineDate": "2026-09-27",
         "showLightningLine": true,
         "showBurnDown": false,
-        "zoomLevel": "day"
+        "zoomLevel": "day",
+        "weeklyMeetingHours": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 1,
+          "5": 0,
+          "6": 0
+        }
       },
       "holidays": [
         {
@@ -1134,120 +1539,46 @@
       ],
       "members": [
         {
-          "id": "mem-10",
-          "name": "木村 宗一郎",
-          "role": "執行役員",
-          "department": "経営企画・技術戦略室",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-11",
-          "name": "渡辺 浩司",
-          "role": "本部長",
-          "department": "開発統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-9",
-          "name": "伊藤 修平",
-          "role": "副本部長",
-          "department": "技術統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-6",
-          "name": "田中 敏夫",
-          "role": "部長",
-          "department": "PMO推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-5",
-          "name": "山田 太郎",
+          "id": "mem-imp-1791100644526-hri0n",
+          "name": "下釜",
           "role": "課長",
-          "department": "クラウド基盤部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-1",
-          "name": "佐藤 健一",
+          "id": "mem-imp-1791100644526-5g1uo",
+          "name": "江口",
           "role": "主任",
-          "department": "基幹開発部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-1-1",
-              "date": "2026-09-25",
+              "id": "ih-imp-2026-09-24-ahc8",
+              "date": "2026-09-24",
               "name": "有給休暇"
             },
             {
-              "id": "ih-1-2",
+              "id": "ih-imp-2026-10-01-tclj",
+              "date": "2026-10-01",
+              "name": "有給休暇"
+            },
+            {
+              "id": "ih-imp-2026-10-02-c37a",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-2",
-          "name": "田中 美咲",
-          "role": "主任",
-          "department": "UI/UX開発部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-2-1",
-              "date": "2026-09-28",
-              "name": "創立記念代休"
-            }
-          ]
-        },
-        {
-          "id": "mem-3",
-          "name": "鈴木 一郎",
+          "id": "mem-imp-1791100644526-o74i3",
+          "name": "竹道",
           "role": "担当",
-          "department": "品質管理部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-3-1",
-              "date": "2026-10-05",
-              "name": "有給休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-4",
-          "name": "高橋 涼介",
-          "role": "担当",
-          "department": "基幹開発部",
-          "dailyWorkingHours": 6,
-          "individualHolidays": [
-            {
-              "id": "ih-4-1",
-              "date": "2026-09-18",
-              "name": "介護/看護休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-7",
-          "name": "小林 誠",
-          "role": "担当",
-          "department": "プロダクト推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-8",
-          "name": "山本 健太",
-          "role": "研修生",
-          "department": "品質管理部",
-          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
           "individualHolidays": []
         }
       ],
@@ -1430,7 +1761,16 @@
         "baselineDate": "2026-09-27",
         "showLightningLine": true,
         "showBurnDown": false,
-        "zoomLevel": "day"
+        "zoomLevel": "day",
+        "weeklyMeetingHours": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 1,
+          "5": 0,
+          "6": 0
+        }
       },
       "holidays": [
         {
@@ -1580,120 +1920,46 @@
       ],
       "members": [
         {
-          "id": "mem-10",
-          "name": "木村 宗一郎",
-          "role": "執行役員",
-          "department": "経営企画・技術戦略室",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-11",
-          "name": "渡辺 浩司",
-          "role": "本部長",
-          "department": "開発統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-9",
-          "name": "伊藤 修平",
-          "role": "副本部長",
-          "department": "技術統括本部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-6",
-          "name": "田中 敏夫",
-          "role": "部長",
-          "department": "PMO推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-5",
-          "name": "山田 太郎",
+          "id": "mem-imp-1791100644526-hri0n",
+          "name": "下釜",
           "role": "課長",
-          "department": "クラウド基盤部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-1",
-          "name": "佐藤 健一",
+          "id": "mem-imp-1791100644526-5g1uo",
+          "name": "江口",
           "role": "主任",
-          "department": "基幹開発部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
+          "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-1-1",
-              "date": "2026-09-25",
+              "id": "ih-imp-2026-09-24-ahc8",
+              "date": "2026-09-24",
               "name": "有給休暇"
             },
             {
-              "id": "ih-1-2",
+              "id": "ih-imp-2026-10-01-tclj",
+              "date": "2026-10-01",
+              "name": "有給休暇"
+            },
+            {
+              "id": "ih-imp-2026-10-02-c37a",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-2",
-          "name": "田中 美咲",
-          "role": "主任",
-          "department": "UI/UX開発部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-2-1",
-              "date": "2026-09-28",
-              "name": "創立記念代休"
-            }
-          ]
-        },
-        {
-          "id": "mem-3",
-          "name": "鈴木 一郎",
+          "id": "mem-imp-1791100644526-o74i3",
+          "name": "竹道",
           "role": "担当",
-          "department": "品質管理部",
+          "department": "ソリューションシステム本部",
           "dailyWorkingHours": 8,
-          "individualHolidays": [
-            {
-              "id": "ih-3-1",
-              "date": "2026-10-05",
-              "name": "有給休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-4",
-          "name": "高橋 涼介",
-          "role": "担当",
-          "department": "基幹開発部",
-          "dailyWorkingHours": 6,
-          "individualHolidays": [
-            {
-              "id": "ih-4-1",
-              "date": "2026-09-18",
-              "name": "介護/看護休暇"
-            }
-          ]
-        },
-        {
-          "id": "mem-7",
-          "name": "小林 誠",
-          "role": "担当",
-          "department": "プロダクト推進部",
-          "dailyWorkingHours": 8,
-          "individualHolidays": []
-        },
-        {
-          "id": "mem-8",
-          "name": "山本 健太",
-          "role": "研修生",
-          "department": "品質管理部",
-          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
           "individualHolidays": []
         }
       ],
@@ -1862,7 +2128,7 @@
       ]
     }
   ],
-  "activeProjectId": "proj-1",
+  "activeProjectId": "proj-1791100674066",
   "processPatterns": [
     {
       "id": "pattern-standard",
@@ -1999,6 +2265,357 @@
           "name": "単体テストレビュー",
           "defaultDays": 1,
           "description": "テスト確認・承認"
+        }
+      ]
+    }
+  ],
+  "estimates": [
+    {
+      "id": "est-1791100673195",
+      "estimateNumber": "EST-2026-005",
+      "title": "ええええ",
+      "startDate": "2026-10-04",
+      "clientName": "未指定顧客",
+      "manager": "下釜",
+      "issueDate": "2026-10-04",
+      "validUntil": "2026-11-04",
+      "status": "linked",
+      "workloadUnit": "人日",
+      "unitPrice": 50000,
+      "taxRate": 0.1,
+      "notes": "",
+      "features": [
+        {
+          "id": "est-f-1791100653133-1",
+          "name": "１",
+          "category": "一般機能",
+          "assignee": "江口",
+          "estimatedWorkload": 10,
+          "unitPrice": 55000,
+          "estimatedAmount": 550000,
+          "description": "",
+          "processes": [
+            { "id": "est-p-1791100653133-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
+            { "id": "est-p-1791100653133-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
+            { "id": "est-p-1791100653133-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+          ]
+        },
+        {
+          "id": "est-f-1791100660123-2",
+          "name": "２",
+          "category": "一般機能",
+          "assignee": "江口",
+          "estimatedWorkload": 10,
+          "unitPrice": 55000,
+          "estimatedAmount": 550000,
+          "description": "",
+          "processes": [
+            { "id": "est-p-1791100660123-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
+            { "id": "est-p-1791100660123-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
+            { "id": "est-p-1791100660123-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+          ]
+        },
+        {
+          "id": "est-f-1791100664204-3",
+          "name": "３",
+          "category": "一般機能",
+          "assignee": "江口",
+          "estimatedWorkload": 10,
+          "unitPrice": 55000,
+          "estimatedAmount": 550000,
+          "description": "",
+          "processes": [
+            { "id": "est-p-1791100664204-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
+            { "id": "est-p-1791100664204-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
+            { "id": "est-p-1791100664204-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+          ]
+        }
+      ],
+      "createdAt": "2026-10-04",
+      "updatedAt": "2026-10-04",
+      "linkedProjectId": "proj-1791100674066",
+      "linkedProjectName": "ええええ",
+      "linkedAt": "2026-10-04"
+    },
+    {
+      "id": "est-1",
+      "estimateNumber": "EST-2026-001",
+      "title": "基幹ECリニューアルプロジェクト",
+      "startDate": "2026-08-01",
+      "clientName": "株式会社ワールドコマース",
+      "manager": "田中 敏夫",
+      "issueDate": "2026-07-20",
+      "validUntil": "2026-09-30",
+      "status": "linked",
+      "workloadUnit": "人日",
+      "unitPrice": 50000,
+      "taxRate": 0.1,
+      "notes": "マイクロサービス化および決済Stripe連携。基幹DB移行を含む概算見積。",
+      "linkedProjectId": "proj-1",
+      "linkedProjectName": "基幹ECリニューアルプロジェクト",
+      "linkedAt": "2026-08-01",
+      "createdAt": "2026-07-20",
+      "updatedAt": "2026-08-01",
+      "features": [
+        {
+          "id": "est-f-1",
+          "name": "ユーザー認証・会員管理機能",
+          "category": "共通基盤",
+          "stepCount": 2400,
+          "estimatedWorkload": 24,
+          "assignee": "佐藤 健一",
+          "unitPrice": 55000,
+          "estimatedAmount": 1320000,
+          "description": "JWT認証・OAuth2.0ソーシャルログイン連携",
+          "processes": [
+            { "id": "est-p-1-1", "name": "基本・詳細設計", "workload": 6, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 330000, "notes": "認証フロー・画面設計" },
+            { "id": "est-p-1-2", "name": "設計レビュー", "workload": 2, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 110000, "notes": "セキュリティレビュー" },
+            { "id": "est-p-1-3", "name": "実装", "workload": 10, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 550000, "notes": "JWT/OAuth2.0実装" },
+            { "id": "est-p-1-4", "name": "実装レビュー", "workload": 2, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 110000, "notes": "コードレビュー" },
+            { "id": "est-p-1-5", "name": "単体テスト", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000, "notes": "単体テスト・検証" }
+          ]
+        },
+        {
+          "id": "est-f-2",
+          "name": "商品検索・カタログ一覧機能",
+          "category": "フロント機能",
+          "stepCount": 3600,
+          "estimatedWorkload": 28,
+          "assignee": "田中 美咲",
+          "unitPrice": 55000,
+          "estimatedAmount": 1540000,
+          "description": "Elasticsearch全文検索・カテゴリ階層フィルタ",
+          "processes": [
+            { "id": "est-p-2-1", "name": "基本・詳細設計", "workload": 7, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 385000, "notes": "検索クエリ・UI設計" },
+            { "id": "est-p-2-2", "name": "設計レビュー", "workload": 2, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 110000, "notes": "パフォーマンス確認" },
+            { "id": "est-p-2-3", "name": "実装", "workload": 12, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 660000, "notes": "Elasticsearch連携・UI" },
+            { "id": "est-p-2-4", "name": "実装レビュー", "workload": 2, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 110000, "notes": "PR承認" },
+            { "id": "est-p-2-5", "name": "単体テスト", "workload": 5, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 275000, "notes": "検索精度・負荷検証" }
+          ]
+        },
+        {
+          "id": "est-f-3",
+          "name": "カート・注文決済機能",
+          "category": "コア機能",
+          "stepCount": 4200,
+          "estimatedWorkload": 34,
+          "assignee": "鈴木 一郎",
+          "unitPrice": 48000,
+          "estimatedAmount": 1632000,
+          "description": "Stripe決済・在庫引当トランザクション",
+          "processes": [
+            { "id": "est-p-3-1", "name": "要件定義・設計", "workload": 8, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 384000, "notes": "決済API・引当設計" },
+            { "id": "est-p-3-2", "name": "設計レビュー", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000, "notes": "トランザクション設計承認" },
+            { "id": "est-p-3-3", "name": "実装", "workload": 15, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 720000, "notes": "Stripe決済・カート実装" },
+            { "id": "est-p-3-4", "name": "実装レビュー", "workload": 2, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 96000, "notes": "コードレビュー" },
+            { "id": "est-p-3-5", "name": "単体テスト", "workload": 6, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 288000, "notes": "異常系・決済モック検証" }
+          ]
+        },
+        {
+          "id": "est-f-4",
+          "name": "マイページ・注文履歴機能",
+          "category": "フロント機能",
+          "stepCount": 1800,
+          "estimatedWorkload": 19.5,
+          "assignee": "小林 誠",
+          "unitPrice": 48000,
+          "estimatedAmount": 936000,
+          "description": "領収書PDF出力・配送ステータス追跡",
+          "processes": [
+            { "id": "est-p-4-1", "name": "基本・詳細設計", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000, "notes": "PDF帳票・画面設計" },
+            { "id": "est-p-4-2", "name": "設計レビュー", "workload": 1.5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 72000, "notes": "レイアウトレビュー" },
+            { "id": "est-p-4-3", "name": "実装", "workload": 8, "assignee": "小林 誠", "unitPrice": 48000, "amount": 384000, "notes": "PDF生成・履歴一覧" },
+            { "id": "est-p-4-4", "name": "実装レビュー", "workload": 1, "assignee": "小林 誠", "unitPrice": 48000, "amount": 48000, "notes": "コード承認" },
+            { "id": "est-p-4-5", "name": "単体テスト", "workload": 4, "assignee": "小林 誠", "unitPrice": 48000, "amount": 192000, "notes": "PDF描画テスト" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "est-2",
+      "estimateNumber": "EST-2026-002",
+      "title": "社内勤怠・経費精算DXアプリ",
+      "startDate": "2026-08-15",
+      "clientName": "自社社内DX推進部",
+      "manager": "山田 太郎",
+      "issueDate": "2026-08-01",
+      "validUntil": "2026-10-31",
+      "status": "linked",
+      "workloadUnit": "人日",
+      "unitPrice": 48000,
+      "taxRate": 0.1,
+      "notes": "モバイルファースト打刻およびOCR領収書自動読取機能の内製開発。",
+      "linkedProjectId": "proj-2",
+      "linkedProjectName": "社内勤怠・経費精算DXアプリ",
+      "linkedAt": "2026-08-15",
+      "createdAt": "2026-08-01",
+      "updatedAt": "2026-08-15",
+      "features": [
+        {
+          "id": "est-f-201",
+          "name": "GPS連動モバイル打刻機能",
+          "category": "勤怠管理",
+          "stepCount": 2200,
+          "estimatedWorkload": 17,
+          "assignee": "佐藤 健一",
+          "unitPrice": 55000,
+          "estimatedAmount": 935000,
+          "description": "位置情報測位とオフライン打刻キャッシュ",
+          "processes": [
+            { "id": "est-p-201-1", "name": "設計", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000, "notes": "GPS測位仕様" },
+            { "id": "est-p-201-2", "name": "実装", "workload": 8, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 440000, "notes": "モバイル打刻UI" },
+            { "id": "est-p-201-3", "name": "テスト", "workload": 5, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 275000, "notes": "端末実機検証" }
+          ]
+        },
+        {
+          "id": "est-f-202",
+          "name": "経費レシートOCR自動精算機能",
+          "category": "経費精算",
+          "stepCount": 2800,
+          "estimatedWorkload": 22,
+          "assignee": "高橋 涼介",
+          "unitPrice": 45000,
+          "estimatedAmount": 990000,
+          "description": "スマホ撮影レシートのOCR解析・仕訳自動作成",
+          "processes": [
+            { "id": "est-p-202-1", "name": "設計", "workload": 5, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 225000, "notes": "OCRパラメータ設計" },
+            { "id": "est-p-202-2", "name": "実装", "workload": 11, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 495000, "notes": "画像認識・仕訳生成" },
+            { "id": "est-p-202-3", "name": "テスト", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000, "notes": "レシート精度検証" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "est-3",
+      "estimateNumber": "EST-2026-003",
+      "title": "AIカスタマーサポート自動応答システム開発",
+      "startDate": "2026-10-05",
+      "clientName": "ネクストビジネスサービス株式会社",
+      "manager": "佐藤 健一",
+      "issueDate": "2026-09-15",
+      "validUntil": "2026-11-30",
+      "status": "approved",
+      "workloadUnit": "人日",
+      "unitPrice": 55000,
+      "taxRate": 0.1,
+      "notes": "顧客問い合わせ一次対応の自動化および有人エスカレーション連携。正式受注内諾済み、進捗管理へ連携可能。",
+      "createdAt": "2026-09-15",
+      "updatedAt": "2026-09-28",
+      "features": [
+        {
+          "id": "est-f-301",
+          "name": "FAQ自動応答チャットボット",
+          "category": "AI応答",
+          "stepCount": 1600,
+          "estimatedWorkload": 16,
+          "assignee": "佐藤 健一",
+          "unitPrice": 55000,
+          "estimatedAmount": 880000,
+          "description": "ナレッジベース検索と類似質問レコメンド",
+          "processes": [
+            { "id": "est-p-301-1", "name": "プロンプト・シナリオ設計", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000 },
+            { "id": "est-p-301-2", "name": "ボット実装・API結合", "workload": 8, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 440000 },
+            { "id": "est-p-301-3", "name": "応答精度評価テスト", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000 }
+          ]
+        },
+        {
+          "id": "est-f-302",
+          "name": "オペレーター有人エスカレーション機能",
+          "category": "オペレーション",
+          "stepCount": 1200,
+          "estimatedWorkload": 12,
+          "assignee": "鈴木 一郎",
+          "unitPrice": 48000,
+          "estimatedAmount": 576000,
+          "description": "未解決案件のコンタクトセンター転送",
+          "processes": [
+            { "id": "est-p-302-1", "name": "エスカレーション設計", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000 },
+            { "id": "est-p-302-2", "name": "オペレーターUI実装", "workload": 6, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 288000 },
+            { "id": "est-p-302-3", "name": "通話・引継ぎテスト", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000 }
+          ]
+        },
+        {
+          "id": "est-f-303",
+          "name": "問い合わせ分析ダッシュボード",
+          "category": "レポーティング",
+          "stepCount": 1800,
+          "estimatedWorkload": 18,
+          "assignee": "田中 美咲",
+          "unitPrice": 55000,
+          "estimatedAmount": 990000,
+          "description": "応対時間・解決率・頻出キーワード可視化",
+          "processes": [
+            { "id": "est-p-303-1", "name": "指標定義・画面設計", "workload": 4, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 220000 },
+            { "id": "est-p-303-2", "name": "集計・グラフ描画実装", "workload": 9, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 495000 },
+            { "id": "est-p-303-3", "name": "集計整合性検証テスト", "workload": 5, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 275000 }
+          ]
+        },
+        {
+          "id": "est-f-304",
+          "name": "会話ログ検索・ナレッジ自動生成",
+          "category": "ナレッジ基盤",
+          "stepCount": 2000,
+          "estimatedWorkload": 20,
+          "assignee": "小林 誠",
+          "unitPrice": 48000,
+          "estimatedAmount": 960000,
+          "description": "過去ログからのFAQ自動候補抽出",
+          "processes": [
+            { "id": "est-p-304-1", "name": "抽出ロジック設計", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000 },
+            { "id": "est-p-304-2", "name": "ログ検索・生成バッチ実装", "workload": 10, "assignee": "小林 誠", "unitPrice": 48000, "amount": 480000 },
+            { "id": "est-p-304-3", "name": "抽出品質検証", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "est-4",
+      "estimateNumber": "EST-2026-004",
+      "title": "店舗POS端末リアルタイム在庫APIゲートウェイ構築",
+      "startDate": "2026-10-15",
+      "clientName": "東海リテールソリューションズ株式会社",
+      "manager": "田中 美咲",
+      "issueDate": "2026-09-25",
+      "validUntil": "2026-10-31",
+      "status": "submitted",
+      "workloadUnit": "人日",
+      "unitPrice": 52000,
+      "taxRate": 0.1,
+      "notes": "全国50店舗のPOSデータリアルタイム集約。要件定義前の概算提示。",
+      "createdAt": "2026-09-25",
+      "updatedAt": "2026-09-26",
+      "features": [
+        {
+          "id": "est-f-401",
+          "name": "POS売上リアルタイム同期API",
+          "category": "API基盤",
+          "stepCount": 2500,
+          "estimatedWorkload": 25,
+          "assignee": "高橋 涼介",
+          "unitPrice": 45000,
+          "estimatedAmount": 1125000,
+          "description": "レシート単位の高スループット非同期キュー処理",
+          "processes": [
+            { "id": "est-p-401-1", "name": "API設計・キュー仕様", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000 },
+            { "id": "est-p-401-2", "name": "キューワーカー・同期API実装", "workload": 13, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 585000 },
+            { "id": "est-p-401-3", "name": "負荷検証・耐障害性テスト", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000 }
+          ]
+        },
+        {
+          "id": "est-f-402",
+          "name": "在庫引当・店舗間移動API",
+          "category": "在庫管理",
+          "stepCount": 3000,
+          "estimatedWorkload": 30,
+          "assignee": "山本 健太",
+          "unitPrice": 32000,
+          "estimatedAmount": 960000,
+          "description": "店舗・倉庫間の在庫同期・引き当てロック機能",
+          "processes": [
+            { "id": "est-p-402-1", "name": "引き当て・排他ロック設計", "workload": 7, "assignee": "山本 健太", "unitPrice": 32000, "amount": 224000 },
+            { "id": "est-p-402-2", "name": "在庫同期API実装", "workload": 15, "assignee": "山本 健太", "unitPrice": 32000, "amount": 480000 },
+            { "id": "est-p-402-3", "name": "店舗間移動シナリオテスト", "workload": 8, "assignee": "山本 健太", "unitPrice": 32000, "amount": 256000 }
+          ]
         }
       ]
     }

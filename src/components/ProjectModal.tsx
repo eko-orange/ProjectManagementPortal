@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { X, FolderPlus, Edit3, User, Clock, FileText, Check, ShieldCheck, AlertCircle } from 'lucide-react';
+import { X, FolderPlus, Edit3, User, Clock, FileText, Check, ShieldCheck, AlertCircle, Trash2 } from 'lucide-react';
 import { Project, ProjectSettings, Member, PROJECT_MANAGER_ROLES, normalizeMemberRole, Estimate } from '../types';
 
 interface ProjectModalProps {
@@ -16,6 +16,7 @@ interface ProjectModalProps {
     estimateNumber?: string;
     estimateTitle?: string;
   }) => void;
+  onDelete?: (project: Project) => void;
   projectToEdit?: Project | null;
   members?: Member[];
   estimates?: Estimate[];
@@ -35,6 +36,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
   isOpen,
   onClose,
   onSave,
+  onDelete,
   projectToEdit,
   members = [],
   estimates = [],
@@ -401,21 +403,39 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           </div>
 
           {/* アクションボタン */}
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2.5">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-            >
-              キャンセル
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs hover:shadow transition-all inline-flex items-center gap-1.5 cursor-pointer"
-            >
-              <Check className="w-4 h-4" />
-              <span>{isEdit ? '変更を保存' : 'プロジェクトを作成'}</span>
-            </button>
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2.5">
+            <div>
+              {isEdit && onDelete && projectToEdit && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onDelete(projectToEdit);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 rounded-lg transition-colors cursor-pointer"
+                  title="このプロジェクトを進捗管理から削除（見積連携されている場合でも見積管理のデータは保持されます）"
+                >
+                  <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                  <span>このプロジェクトを削除</span>
+                </button>
+              )}
+            </div>
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              >
+                キャンセル
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs hover:shadow transition-all inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <Check className="w-4 h-4" />
+                <span>{isEdit ? '変更を保存' : 'プロジェクトを作成'}</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>

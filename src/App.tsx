@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { Feature, Holiday, Project, ProjectSettings, TaskProcess, Member, WbsSnapshot, ProcessStructurePattern, Estimate, EstimateFeature } from './types';
+import { Feature, Holiday, Project, ProjectSettings, TaskProcess, Member, WbsSnapshot, ProcessStructurePattern, Estimate, EstimateFeature, EstimateProcess } from './types';
 import { INITIAL_FEATURES, INITIAL_HOLIDAYS, INITIAL_PROJECTS, INITIAL_SETTINGS, INITIAL_MEMBERS, INITIAL_PROCESS_STRUCTURE_PATTERNS, INITIAL_ESTIMATES } from './data/initialData';
 import {
   addWorkingDays,
@@ -105,6 +105,9 @@ export default function App() {
     feature: Feature;
     project: Project;
   } | null>(null);
+
+  // プロジェクト削除確認モーダル状態
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
 
   // データリセット確認カスタムモーダル
   const [isClearDataModalOpen, setIsClearDataModalOpen] = useState(false);
@@ -559,16 +562,31 @@ export default function App() {
     const newEstNum = `EST-${year}-${String(maxNum + 1).padStart(3, '0')}`;
 
     const estFeatures: EstimateFeature[] = (proj.features || []).map((f, idx) => {
-      const plannedWorkload = f.processes.reduce((sum, p) => sum + (p.plannedWorkload || 0), 0);
+      const procList: EstimateProcess[] = (f.processes || []).map((p, pIdx) => ({
+        id: `est-p-${Date.now()}-${idx + 1}-${pIdx + 1}`,
+        name: p.processType || '実装',
+        workload: p.plannedWorkload || 1,
+        assignee: p.assignee || f.processes[0]?.assignee || undefined,
+        unitPrice: 50000,
+        amount: (p.plannedWorkload || 1) * 50000,
+        notes: p.notes || '',
+      }));
+      const plannedWorkload = procList.length > 0
+        ? Math.round(procList.reduce((sum, p) => sum + (p.workload || 0), 0) * 10) / 10
+        : Math.round(f.processes.reduce((sum, p) => sum + (p.plannedWorkload || 0), 0) * 10) / 10;
+      const featAssignee = f.processes.find((p) => p.assignee)?.assignee;
+
       return {
         id: `est-f-${Date.now()}-${idx + 1}`,
         name: f.name,
         category: f.category || '一般機能',
+        assignee: featAssignee,
         stepCount: f.stepCount,
         estimatedWorkload: plannedWorkload || 10,
         unitPrice: 50000,
         estimatedAmount: (plannedWorkload || 10) * 50000,
         description: '',
+        processes: procList.length > 0 ? procList : undefined,
       };
     });
 
@@ -576,6 +594,7 @@ export default function App() {
       id: `est-${Date.now()}`,
       estimateNumber: newEstNum,
       title: proj.name,
+      startDate: proj.settings?.baselineDate || today,
       clientName: '未指定顧客',
       manager: proj.manager || '田中 敏夫',
       issueDate: today,
@@ -648,19 +667,85 @@ export default function App() {
     });
   };
 
-  // プロジェクト削除
-  const handleDeleteProject = async (projectId: string) => {
-    if (confirm('このプロジェクトを削除しますか？')) {
-      const success = await deleteProjectApi(projectId);
-      if (success) {
-        setProjects((prev) => {
-          const next = prev.filter((p) => p.id !== projectId);
-          if (selectedProjectId === projectId) {
-            setSelectedProjectId('all');
-          }
-          return next;
-        });
+  // プロジェクト削除モーダルを開く
+  const handleOpenDeleteProjectModal = (proj: Project) => {
+    setProjectToDelete(proj);
+  };
+
+  // プロジェクト削除の実行（見積管理の見積データは削除せず保持）
+  const handleConfirmDeleteProject = async () => {
+    if (!projectToDelete) return;
+    const targetId = projectToDelete.id;
+    const targetName = projectToDelete.name;
+    const hasLinkedEstimate = Boolean(projectToDelete.estimateId || projectToDelete.estimateNumber);
+
+    setIsSaving(true);
+    const success = await deleteProjectApi(targetId);
+    if (success) {
+      setProjects((prev) => {
+        const next = prev.filter((p) => p.id !== targetId);
+        // 全プロジェクトが削除された場合は初期空プロジェクトを自動補填
+        if (next.length === 0) {
+          const today = new Date().toISOString().slice(0, 10);
+          const fallbackProject: Project = {
+            id: `proj-${Date.now()}`,
+            name: '新規プロジェクト',
+            manager: '田中 敏夫',
+            description: '',
+            createdAt: today,
+            updatedAt: today,
+            settings: {
+              ...INITIAL_SETTINGS,
+              projectName: '新規プロジェクト',
+            },
+            features: [],
+            holidays: [...INITIAL_HOLIDAYS],
+            members: JSON.parse(JSON.stringify(INITIAL_MEMBERS)),
+          };
+          return [fallbackProject];
+        }
+        return next;
+      });
+
+      if (selectedProjectId === targetId) {
+        setSelectedProjectId('all');
       }
+
+      // 見積管理データ側のステータスを同期（見積自体は削除せず、連携情報のみ解除してステータスを受注承認済に戻す）
+      setEstimates((prev) =>
+        prev.map((e) => {
+          if (e.linkedProjectId === targetId || (projectToDelete.estimateId && e.id === projectToDelete.estimateId)) {
+            return {
+              ...e,
+              linkedProjectId: undefined,
+              linkedProjectName: undefined,
+              linkedAt: undefined,
+              status: e.status === 'linked' ? 'approved' : e.status,
+              updatedAt: new Date().toISOString().slice(0, 10),
+            };
+          }
+          return e;
+        })
+      );
+
+      setProjectToDelete(null);
+      setIsSaving(false);
+      setLastSavedAt(new Date());
+
+      setAppToast({
+        type: 'success',
+        title: `プロジェクト「${targetName}」を進捗管理から削除しました`,
+        description: hasLinkedEstimate
+          ? '※見積管理の見積データは保持されています（ステータスは受注・承認済に戻りました）。'
+          : '進捗管理から正常に削除されました。',
+      });
+    } else {
+      setIsSaving(false);
+      setAppToast({
+        type: 'error',
+        title: 'プロジェクトの削除に失敗しました',
+        description: 'サーバーとの通信でエラーが発生しました。',
+      });
     }
   };
 
@@ -1389,6 +1474,7 @@ export default function App() {
             onSelectProject={handleSelectProject}
             onOpenCreateProject={handleOpenCreateModal}
             onOpenEditProject={handleOpenEditModal}
+            onDeleteProject={handleOpenDeleteProjectModal}
             onUpdateSettings={handleUpdateSettings}
             onOpenAddFeature={() => handleOpenAddFeature()}
             onOpenHolidays={() => setIsHolidaysOpen(true)}
@@ -1447,6 +1533,7 @@ export default function App() {
               onDeleteProcess={handleDeleteProcess}
               onOpenAddFeature={handleOpenAddFeature}
               onOpenEditProject={handleOpenEditModal}
+              onDeleteProject={handleOpenDeleteProjectModal}
               onAutoSchedule={handleDirectAutoSchedule}
               onAutoScheduleAll={handleDirectAutoScheduleAll}
               onAutoScheduleAllProjects={handleDirectAutoScheduleAllProjects}
@@ -1467,6 +1554,7 @@ export default function App() {
           estimateToEdit={estimateToEdit}
           members={currentMembers}
           existingEstimates={estimates}
+          processPatterns={processPatterns}
         />
       )}
 
@@ -1599,10 +1687,101 @@ export default function App() {
           setProjectToEdit(null);
         }}
         onSave={handleSaveProjectModal}
+        onDelete={handleOpenDeleteProjectModal}
         projectToEdit={projectToEdit}
         members={currentMembers}
         estimates={estimates}
       />
+
+      {/* プロジェクト削除確認モーダル */}
+      {projectToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col">
+            {/* ヘッダー */}
+            <div className="px-6 py-4 bg-rose-50 border-b border-rose-100 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-rose-100 text-rose-600 rounded-xl">
+                  <Trash2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">プロジェクトの削除</h3>
+                  <p className="text-xs text-rose-600 font-medium">進捗管理からのプロジェクト削除</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setProjectToDelete(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-white/80 rounded-lg transition-colors cursor-pointer"
+                title="閉じる"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* 本文 */}
+            <div className="p-6 space-y-4 text-xs text-slate-700">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-500 font-medium">削除対象プロジェクト:</span>
+                  <span className="font-bold text-slate-900 text-sm">{projectToDelete.name}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-slate-600">
+                  <span>プロジェクト管理者 (PM):</span>
+                  <span className="font-semibold text-slate-800">{projectToDelete.manager || '未設定'}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-slate-600">
+                  <span>登録機能数 / 作成日:</span>
+                  <span>{projectToDelete.features?.length || 0}機能 / {projectToDelete.createdAt || '-'}</span>
+                </div>
+              </div>
+
+              {/* 見積連携プロジェクトである場合の安心メッセージ */}
+              {Boolean(projectToDelete.estimateNumber || projectToDelete.estimateId) ? (
+                <div className="bg-indigo-50 border-2 border-indigo-300 p-3.5 rounded-xl space-y-1.5">
+                  <div className="flex items-center gap-1.5 font-bold text-xs text-indigo-950">
+                    <Sparkles className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span>見積連携情報：見積管理のデータは保持されます</span>
+                  </div>
+                  <p className="text-indigo-900 text-[11px] leading-relaxed">
+                    このプロジェクトは概算見積<strong>「{projectToDelete.estimateNumber || ''} {projectToDelete.estimateTitle || ''}」</strong>から連携されています。
+                  </p>
+                  <p className="text-indigo-800 font-semibold text-[11px] bg-white/80 p-2 rounded border border-indigo-200">
+                    💡 進捗管理から削除しても、<strong>見積管理の見積データ（機能・単価・概算金額等）は一切削除されずそのまま保持されます</strong>。
+                    （ステータスは「受注・承認済」に戻り、いつでも再度連携可能です）
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg text-amber-900 text-[11px] leading-relaxed">
+                  このプロジェクトおよび登録されている機能・工程・進捗実績が進捗管理から削除されます。
+                </div>
+              )}
+
+              <p className="text-slate-600 text-[11px]">
+                本当にこのプロジェクトを進捗管理から削除してよろしいですか？
+              </p>
+            </div>
+
+            {/* フッター */}
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => setProjectToDelete(null)}
+                className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors cursor-pointer"
+              >
+                キャンセル
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDeleteProject}
+                className="px-5 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs hover:shadow transition-all inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>プロジェクトを削除する</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* データリセット確認モーダル */}
       {isClearDataModalOpen && (

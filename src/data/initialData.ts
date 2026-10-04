@@ -981,6 +981,13 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 55000,
         estimatedAmount: 1320000,
         description: 'JWT認証・OAuth2.0ソーシャルログイン連携',
+        processes: [
+          { id: 'est-p-1-1', name: '基本・詳細設計', workload: 6, assignee: '佐藤 健一', unitPrice: 55000, amount: 330000, notes: '認証フロー・画面設計' },
+          { id: 'est-p-1-2', name: '設計レビュー', workload: 2, assignee: '佐藤 健一', unitPrice: 55000, amount: 110000, notes: 'セキュリティレビュー' },
+          { id: 'est-p-1-3', name: '実装', workload: 10, assignee: '佐藤 健一', unitPrice: 55000, amount: 550000, notes: 'JWT/OAuth2.0実装' },
+          { id: 'est-p-1-4', name: '実装レビュー', workload: 2, assignee: '佐藤 健一', unitPrice: 55000, amount: 110000, notes: 'コードレビュー' },
+          { id: 'est-p-1-5', name: '単体テスト', workload: 4, assignee: '佐藤 健一', unitPrice: 55000, amount: 220000, notes: '単体テスト・検証' },
+        ],
       },
       {
         id: 'est-f-2',
@@ -992,6 +999,13 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 55000,
         estimatedAmount: 1540000,
         description: 'Elasticsearch全文検索・カテゴリ階層フィルタ',
+        processes: [
+          { id: 'est-p-2-1', name: '基本・詳細設計', workload: 7, assignee: '田中 美咲', unitPrice: 55000, amount: 385000, notes: '検索クエリ・UI設計' },
+          { id: 'est-p-2-2', name: '設計レビュー', workload: 2, assignee: '田中 美咲', unitPrice: 55000, amount: 110000, notes: 'パフォーマンス確認' },
+          { id: 'est-p-2-3', name: '実装', workload: 12, assignee: '田中 美咲', unitPrice: 55000, amount: 660000, notes: 'Elasticsearch連携・UI' },
+          { id: 'est-p-2-4', name: '実装レビュー', workload: 2, assignee: '田中 美咲', unitPrice: 55000, amount: 110000, notes: 'PR承認' },
+          { id: 'est-p-2-5', name: '単体テスト', workload: 5, assignee: '田中 美咲', unitPrice: 55000, amount: 275000, notes: '検索精度・負荷検証' },
+        ],
       },
       {
         id: 'est-f-3',
@@ -1003,6 +1017,13 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 48000,
         estimatedAmount: 1632000,
         description: 'Stripe決済・在庫引当トランザクション',
+        processes: [
+          { id: 'est-p-3-1', name: '要件定義・設計', workload: 8, assignee: '鈴木 一郎', unitPrice: 48000, amount: 384000, notes: '決済API・引当設計' },
+          { id: 'est-p-3-2', name: '設計レビュー', workload: 3, assignee: '鈴木 一郎', unitPrice: 48000, amount: 144000, notes: 'トランザクション設計承認' },
+          { id: 'est-p-3-3', name: '実装', workload: 15, assignee: '鈴木 一郎', unitPrice: 48000, amount: 720000, notes: 'Stripe決済・カート実装' },
+          { id: 'est-p-3-4', name: '実装レビュー', workload: 2, assignee: '鈴木 一郎', unitPrice: 48000, amount: 96000, notes: 'コードレビュー' },
+          { id: 'est-p-3-5', name: '単体テスト', workload: 6, assignee: '鈴木 一郎', unitPrice: 48000, amount: 288000, notes: '異常系・決済モック検証' },
+        ],
       },
       {
         id: 'est-f-4',
@@ -1014,6 +1035,13 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 48000,
         estimatedAmount: 936000,
         description: '領収書PDF出力・配送ステータス追跡',
+        processes: [
+          { id: 'est-p-4-1', name: '基本・詳細設計', workload: 5, assignee: '小林 誠', unitPrice: 48000, amount: 240000, notes: 'PDF帳票・画面設計' },
+          { id: 'est-p-4-2', name: '設計レビュー', workload: 1.5, assignee: '小林 誠', unitPrice: 48000, amount: 72000, notes: 'レイアウトレビュー' },
+          { id: 'est-p-4-3', name: '実装', workload: 8, assignee: '小林 誠', unitPrice: 48000, amount: 384000, notes: 'PDF生成・履歴一覧' },
+          { id: 'est-p-4-4', name: '実装レビュー', workload: 1, assignee: '小林 誠', unitPrice: 48000, amount: 48000, notes: 'コード承認' },
+          { id: 'est-p-4-5', name: '単体テスト', workload: 4, assignee: '小林 誠', unitPrice: 48000, amount: 192000, notes: 'PDF描画テスト' },
+        ],
       },
     ],
   },
@@ -1047,6 +1075,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 55000,
         estimatedAmount: 935000,
         description: '位置情報測位とオフライン打刻キャッシュ',
+        processes: [
+          { id: 'est-p-201-1', name: '設計', workload: 4, assignee: '佐藤 健一', unitPrice: 55000, amount: 220000, notes: 'GPS測位仕様' },
+          { id: 'est-p-201-2', name: '実装', workload: 8, assignee: '佐藤 健一', unitPrice: 55000, amount: 440000, notes: 'モバイル打刻UI' },
+          { id: 'est-p-201-3', name: 'テスト', workload: 5, assignee: '佐藤 健一', unitPrice: 55000, amount: 275000, notes: '端末実機検証' },
+        ],
       },
       {
         id: 'est-f-202',
@@ -1058,6 +1091,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 45000,
         estimatedAmount: 990000,
         description: 'スマホ撮影レシートのOCR解析・仕訳自動作成',
+        processes: [
+          { id: 'est-p-202-1', name: '設計', workload: 5, assignee: '高橋 涼介', unitPrice: 45000, amount: 225000, notes: 'OCRパラメータ設計' },
+          { id: 'est-p-202-2', name: '実装', workload: 11, assignee: '高橋 涼介', unitPrice: 45000, amount: 495000, notes: '画像認識・仕訳生成' },
+          { id: 'est-p-202-3', name: 'テスト', workload: 6, assignee: '高橋 涼介', unitPrice: 45000, amount: 270000, notes: 'レシート精度検証' },
+        ],
       },
     ],
   },
@@ -1088,6 +1126,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 55000,
         estimatedAmount: 880000,
         description: 'ナレッジベース検索と類似質問レコメンド',
+        processes: [
+          { id: 'est-p-301-1', name: 'プロンプト・シナリオ設計', workload: 4, assignee: '佐藤 健一', unitPrice: 55000, amount: 220000 },
+          { id: 'est-p-301-2', name: 'ボット実装・API結合', workload: 8, assignee: '佐藤 健一', unitPrice: 55000, amount: 440000 },
+          { id: 'est-p-301-3', name: '応答精度評価テスト', workload: 4, assignee: '佐藤 健一', unitPrice: 55000, amount: 220000 },
+        ],
       },
       {
         id: 'est-f-302',
@@ -1099,6 +1142,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 48000,
         estimatedAmount: 576000,
         description: '未解決案件のコンタクトセンター転送',
+        processes: [
+          { id: 'est-p-302-1', name: 'エスカレーション設計', workload: 3, assignee: '鈴木 一郎', unitPrice: 48000, amount: 144000 },
+          { id: 'est-p-302-2', name: 'オペレーターUI実装', workload: 6, assignee: '鈴木 一郎', unitPrice: 48000, amount: 288000 },
+          { id: 'est-p-302-3', name: '通話・引継ぎテスト', workload: 3, assignee: '鈴木 一郎', unitPrice: 48000, amount: 144000 },
+        ],
       },
       {
         id: 'est-f-303',
@@ -1110,6 +1158,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 55000,
         estimatedAmount: 990000,
         description: '応対時間・解決率・頻出キーワード可視化',
+        processes: [
+          { id: 'est-p-303-1', name: '指標定義・画面設計', workload: 4, assignee: '田中 美咲', unitPrice: 55000, amount: 220000 },
+          { id: 'est-p-303-2', name: '集計・グラフ描画実装', workload: 9, assignee: '田中 美咲', unitPrice: 55000, amount: 495000 },
+          { id: 'est-p-303-3', name: '集計整合性検証テスト', workload: 5, assignee: '田中 美咲', unitPrice: 55000, amount: 275000 },
+        ],
       },
       {
         id: 'est-f-304',
@@ -1121,6 +1174,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 48000,
         estimatedAmount: 960000,
         description: '過去ログからのFAQ自動候補抽出',
+        processes: [
+          { id: 'est-p-304-1', name: '抽出ロジック設計', workload: 5, assignee: '小林 誠', unitPrice: 48000, amount: 240000 },
+          { id: 'est-p-304-2', name: 'ログ検索・生成バッチ実装', workload: 10, assignee: '小林 誠', unitPrice: 48000, amount: 480000 },
+          { id: 'est-p-304-3', name: '抽出品質検証', workload: 5, assignee: '小林 誠', unitPrice: 48000, amount: 240000 },
+        ],
       },
     ],
   },
@@ -1151,6 +1209,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 45000,
         estimatedAmount: 1125000,
         description: 'レシート単位の高スループット非同期キュー処理',
+        processes: [
+          { id: 'est-p-401-1', name: 'API設計・キュー仕様', workload: 6, assignee: '高橋 涼介', unitPrice: 45000, amount: 270000 },
+          { id: 'est-p-401-2', name: 'キューワーカー・同期API実装', workload: 13, assignee: '高橋 涼介', unitPrice: 45000, amount: 585000 },
+          { id: 'est-p-401-3', name: '負荷検証・耐障害性テスト', workload: 6, assignee: '高橋 涼介', unitPrice: 45000, amount: 270000 },
+        ],
       },
       {
         id: 'est-f-402',
@@ -1162,6 +1225,11 @@ export const INITIAL_ESTIMATES: Estimate[] = [
         unitPrice: 32000,
         estimatedAmount: 960000,
         description: '店舗・倉庫間の在庫同期・引き当てロック機能',
+        processes: [
+          { id: 'est-p-402-1', name: '引き当て・排他ロック設計', workload: 7, assignee: '山本 健太', unitPrice: 32000, amount: 224000 },
+          { id: 'est-p-402-2', name: '在庫同期API実装', workload: 15, assignee: '山本 健太', unitPrice: 32000, amount: 480000 },
+          { id: 'est-p-402-3', name: '店舗間移動シナリオテスト', workload: 8, assignee: '山本 健太', unitPrice: 32000, amount: 256000 },
+        ],
       },
     ],
   },

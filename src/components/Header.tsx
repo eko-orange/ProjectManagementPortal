@@ -45,6 +45,7 @@ interface HeaderProps {
   onSelectProject: (projectId: string) => void;
   onOpenCreateProject: () => void;
   onOpenEditProject: (projectId: string) => void;
+  onDeleteProject?: (project: Project) => void;
   onUpdateSettings: (newSettings: Partial<ProjectSettings>) => void;
   onOpenAddFeature: () => void;
   onOpenHolidays: () => void;
@@ -83,6 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectProject,
   onOpenCreateProject,
   onOpenEditProject,
+  onDeleteProject,
   onUpdateSettings,
   onOpenAddFeature,
   onOpenHolidays,
@@ -514,15 +516,28 @@ export const Header: React.FC<HeaderProps> = ({
           )}
 
           {!isAllProjects && (
-            <button
-              type="button"
-              onClick={() => onOpenEditProject(selectedProjectId)}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-[11px] font-medium transition-colors cursor-pointer"
-              title="選択中のプロジェクト設定・管理者を編集"
-            >
-              <Settings className="w-3 h-3 text-slate-400" />
-              <span>プロジェクト編集</span>
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => onOpenEditProject(selectedProjectId)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-[11px] font-medium transition-colors cursor-pointer"
+                title="選択中のプロジェクト設定・管理者を編集"
+              >
+                <Settings className="w-3 h-3 text-slate-400" />
+                <span>プロジェクト編集</span>
+              </button>
+              {onDeleteProject && currentProjectMeta && (
+                <button
+                  type="button"
+                  onClick={() => onDeleteProject(currentProjectMeta)}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800 hover:bg-rose-950 text-rose-300 hover:text-rose-100 border border-slate-700 hover:border-rose-700 text-[11px] font-medium transition-colors cursor-pointer"
+                  title="選択中のプロジェクトを進捗管理から削除（見積連携されている場合でも見積管理のデータは保持されます）"
+                >
+                  <Trash2 className="w-3 h-3 text-rose-400" />
+                  <span>プロジェクト削除</span>
+                </button>
+              )}
+            </>
           )}
 
           <button
