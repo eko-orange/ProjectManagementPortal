@@ -171,25 +171,18 @@ export async function updateProjectApi(
 }
 
 // プロジェクト削除（見積管理と連携されていても見積自体は削除しない）
-export async function deleteProjectApi(id: string): Promise<boolean> {
+export async function deleteProjectApi(id: string, currentEstimates?: Estimate[]): Promise<boolean> {
   try {
     const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' });
     if (res.ok) {
-      // ローカルストレージ側も同期（見積は保持し、リンク情報のみ解除）
-      const estimates = loadEstimatesFromLocalStorage();
-      const updatedEstimates = estimates.map((est) => {
-        if (est.linkedProjectId === id) {
-          return {
-            ...est,
-            linkedProjectId: undefined,
-            linkedProjectName: undefined,
-            linkedAt: undefined,
-            status: (est.status === 'linked' ? 'approved' : est.status) as any,
-          };
-        }
-        return est;
-      });
-      saveEstimatesToLocalStorage(updatedEstimates);
+      const data = await res.json();
+      // サーバーから返却された最新の見積一覧（リンク解除済）をローカルに反映
+      if (Array.isArray(data.estimates)) {
+        saveEstimatesToLocalStorage(data.estimates);
+      }
+      if (Array.isArray(data.projects)) {
+        saveProjectsToLocalStorage(data.projects, data.activeProjectId || 'all');
+      }
       return true;
     }
   } catch (err) {
@@ -203,8 +196,8 @@ export async function deleteProjectApi(id: string): Promise<boolean> {
     saveProjectsToLocalStorage(filtered, newActiveId);
 
     // 見積管理データは削除せず、連携情報のみ解除
-    const estimates = loadEstimatesFromLocalStorage();
-    const updatedEstimates = estimates.map((est) => {
+    const baseEstimates = currentEstimates || loadEstimatesFromLocalStorage();
+    const updatedEstimates = baseEstimates.map((est) => {
       if (est.linkedProjectId === id) {
         return {
           ...est,

@@ -6,7 +6,7 @@
       "manager": "下釜",
       "description": "未指定顧客向け見積(EST-2026-005)より進捗管理へ連携",
       "createdAt": "2026-10-04",
-      "updatedAt": "2026-10-04",
+      "updatedAt": "2026-10-05",
       "estimateId": "est-1791100673195",
       "estimateNumber": "EST-2026-005",
       "estimateTitle": "ええええ",
@@ -425,46 +425,131 @@
       ],
       "members": [
         {
-          "id": "mem-imp-1791100644526-hri0n",
-          "name": "下釜",
+          "id": "mem-10",
+          "name": "木村 宗一郎",
+          "role": "執行役員",
+          "department": "経営企画・技術戦略室",
+          "dailyWorkingHours": 8,
+          "unitPrice": 100000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-11",
+          "name": "渡辺 浩司",
+          "role": "本部長",
+          "department": "開発統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 85000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-9",
+          "name": "伊藤 修平",
+          "role": "副本部長",
+          "department": "技術統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 75000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-6",
+          "name": "田中 敏夫",
+          "role": "部長",
+          "department": "PMO推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 70000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-5",
+          "name": "山田 太郎",
           "role": "課長",
-          "department": "ソリューションシステム本部",
+          "department": "クラウド基盤部",
           "dailyWorkingHours": 8,
           "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-imp-1791100644526-5g1uo",
-          "name": "江口",
+          "id": "mem-1",
+          "name": "佐藤 健一",
           "role": "主任",
-          "department": "ソリューションシステム本部",
+          "department": "基幹開発部",
           "dailyWorkingHours": 8,
           "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-imp-2026-09-24-ahc8",
-              "date": "2026-09-24",
+              "id": "ih-1-1",
+              "date": "2026-09-25",
               "name": "有給休暇"
             },
             {
-              "id": "ih-imp-2026-10-01-tclj",
-              "date": "2026-10-01",
-              "name": "有給休暇"
-            },
-            {
-              "id": "ih-imp-2026-10-02-c37a",
+              "id": "ih-1-2",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-imp-1791100644526-o74i3",
-          "name": "竹道",
+          "id": "mem-2",
+          "name": "田中 美咲",
+          "role": "主任",
+          "department": "UI/UX開発部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 55000,
+          "individualHolidays": [
+            {
+              "id": "ih-2-1",
+              "date": "2026-09-28",
+              "name": "創立記念代休"
+            }
+          ]
+        },
+        {
+          "id": "mem-3",
+          "name": "鈴木 一郎",
           "role": "担当",
-          "department": "ソリューションシステム本部",
+          "department": "品質管理部",
           "dailyWorkingHours": 8,
           "unitPrice": 48000,
+          "individualHolidays": [
+            {
+              "id": "ih-3-1",
+              "date": "2026-10-05",
+              "name": "有給休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-4",
+          "name": "高橋 涼介",
+          "role": "担当",
+          "department": "基幹開発部",
+          "dailyWorkingHours": 6,
+          "unitPrice": 45000,
+          "individualHolidays": [
+            {
+              "id": "ih-4-1",
+              "date": "2026-09-18",
+              "name": "介護/看護休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-7",
+          "name": "小林 誠",
+          "role": "担当",
+          "department": "プロダクト推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-8",
+          "name": "山本 健太",
+          "role": "研修生",
+          "department": "品質管理部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 32000,
           "individualHolidays": []
         }
       ],
@@ -966,46 +1051,131 @@
       ],
       "members": [
         {
-          "id": "mem-imp-1791100644526-hri0n",
-          "name": "下釜",
+          "id": "mem-10",
+          "name": "木村 宗一郎",
+          "role": "執行役員",
+          "department": "経営企画・技術戦略室",
+          "dailyWorkingHours": 8,
+          "unitPrice": 100000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-11",
+          "name": "渡辺 浩司",
+          "role": "本部長",
+          "department": "開発統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 85000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-9",
+          "name": "伊藤 修平",
+          "role": "副本部長",
+          "department": "技術統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 75000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-6",
+          "name": "田中 敏夫",
+          "role": "部長",
+          "department": "PMO推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 70000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-5",
+          "name": "山田 太郎",
           "role": "課長",
-          "department": "ソリューションシステム本部",
+          "department": "クラウド基盤部",
           "dailyWorkingHours": 8,
           "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-imp-1791100644526-5g1uo",
-          "name": "江口",
+          "id": "mem-1",
+          "name": "佐藤 健一",
           "role": "主任",
-          "department": "ソリューションシステム本部",
+          "department": "基幹開発部",
           "dailyWorkingHours": 8,
           "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-imp-2026-09-24-ahc8",
-              "date": "2026-09-24",
+              "id": "ih-1-1",
+              "date": "2026-09-25",
               "name": "有給休暇"
             },
             {
-              "id": "ih-imp-2026-10-01-tclj",
-              "date": "2026-10-01",
-              "name": "有給休暇"
-            },
-            {
-              "id": "ih-imp-2026-10-02-c37a",
+              "id": "ih-1-2",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-imp-1791100644526-o74i3",
-          "name": "竹道",
+          "id": "mem-2",
+          "name": "田中 美咲",
+          "role": "主任",
+          "department": "UI/UX開発部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 55000,
+          "individualHolidays": [
+            {
+              "id": "ih-2-1",
+              "date": "2026-09-28",
+              "name": "創立記念代休"
+            }
+          ]
+        },
+        {
+          "id": "mem-3",
+          "name": "鈴木 一郎",
           "role": "担当",
-          "department": "ソリューションシステム本部",
+          "department": "品質管理部",
           "dailyWorkingHours": 8,
           "unitPrice": 48000,
+          "individualHolidays": [
+            {
+              "id": "ih-3-1",
+              "date": "2026-10-05",
+              "name": "有給休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-4",
+          "name": "高橋 涼介",
+          "role": "担当",
+          "department": "基幹開発部",
+          "dailyWorkingHours": 6,
+          "unitPrice": 45000,
+          "individualHolidays": [
+            {
+              "id": "ih-4-1",
+              "date": "2026-09-18",
+              "name": "介護/看護休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-7",
+          "name": "小林 誠",
+          "role": "担当",
+          "department": "プロダクト推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-8",
+          "name": "山本 健太",
+          "role": "研修生",
+          "department": "品質管理部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 32000,
           "individualHolidays": []
         }
       ],
@@ -1539,46 +1709,131 @@
       ],
       "members": [
         {
-          "id": "mem-imp-1791100644526-hri0n",
-          "name": "下釜",
+          "id": "mem-10",
+          "name": "木村 宗一郎",
+          "role": "執行役員",
+          "department": "経営企画・技術戦略室",
+          "dailyWorkingHours": 8,
+          "unitPrice": 100000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-11",
+          "name": "渡辺 浩司",
+          "role": "本部長",
+          "department": "開発統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 85000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-9",
+          "name": "伊藤 修平",
+          "role": "副本部長",
+          "department": "技術統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 75000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-6",
+          "name": "田中 敏夫",
+          "role": "部長",
+          "department": "PMO推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 70000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-5",
+          "name": "山田 太郎",
           "role": "課長",
-          "department": "ソリューションシステム本部",
+          "department": "クラウド基盤部",
           "dailyWorkingHours": 8,
           "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-imp-1791100644526-5g1uo",
-          "name": "江口",
+          "id": "mem-1",
+          "name": "佐藤 健一",
           "role": "主任",
-          "department": "ソリューションシステム本部",
+          "department": "基幹開発部",
           "dailyWorkingHours": 8,
           "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-imp-2026-09-24-ahc8",
-              "date": "2026-09-24",
+              "id": "ih-1-1",
+              "date": "2026-09-25",
               "name": "有給休暇"
             },
             {
-              "id": "ih-imp-2026-10-01-tclj",
-              "date": "2026-10-01",
-              "name": "有給休暇"
-            },
-            {
-              "id": "ih-imp-2026-10-02-c37a",
+              "id": "ih-1-2",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-imp-1791100644526-o74i3",
-          "name": "竹道",
+          "id": "mem-2",
+          "name": "田中 美咲",
+          "role": "主任",
+          "department": "UI/UX開発部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 55000,
+          "individualHolidays": [
+            {
+              "id": "ih-2-1",
+              "date": "2026-09-28",
+              "name": "創立記念代休"
+            }
+          ]
+        },
+        {
+          "id": "mem-3",
+          "name": "鈴木 一郎",
           "role": "担当",
-          "department": "ソリューションシステム本部",
+          "department": "品質管理部",
           "dailyWorkingHours": 8,
           "unitPrice": 48000,
+          "individualHolidays": [
+            {
+              "id": "ih-3-1",
+              "date": "2026-10-05",
+              "name": "有給休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-4",
+          "name": "高橋 涼介",
+          "role": "担当",
+          "department": "基幹開発部",
+          "dailyWorkingHours": 6,
+          "unitPrice": 45000,
+          "individualHolidays": [
+            {
+              "id": "ih-4-1",
+              "date": "2026-09-18",
+              "name": "介護/看護休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-7",
+          "name": "小林 誠",
+          "role": "担当",
+          "department": "プロダクト推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-8",
+          "name": "山本 健太",
+          "role": "研修生",
+          "department": "品質管理部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 32000,
           "individualHolidays": []
         }
       ],
@@ -1920,46 +2175,131 @@
       ],
       "members": [
         {
-          "id": "mem-imp-1791100644526-hri0n",
-          "name": "下釜",
+          "id": "mem-10",
+          "name": "木村 宗一郎",
+          "role": "執行役員",
+          "department": "経営企画・技術戦略室",
+          "dailyWorkingHours": 8,
+          "unitPrice": 100000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-11",
+          "name": "渡辺 浩司",
+          "role": "本部長",
+          "department": "開発統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 85000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-9",
+          "name": "伊藤 修平",
+          "role": "副本部長",
+          "department": "技術統括本部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 75000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-6",
+          "name": "田中 敏夫",
+          "role": "部長",
+          "department": "PMO推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 70000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-5",
+          "name": "山田 太郎",
           "role": "課長",
-          "department": "ソリューションシステム本部",
+          "department": "クラウド基盤部",
           "dailyWorkingHours": 8,
           "unitPrice": 60000,
           "individualHolidays": []
         },
         {
-          "id": "mem-imp-1791100644526-5g1uo",
-          "name": "江口",
+          "id": "mem-1",
+          "name": "佐藤 健一",
           "role": "主任",
-          "department": "ソリューションシステム本部",
+          "department": "基幹開発部",
           "dailyWorkingHours": 8,
           "unitPrice": 55000,
           "individualHolidays": [
             {
-              "id": "ih-imp-2026-09-24-ahc8",
-              "date": "2026-09-24",
+              "id": "ih-1-1",
+              "date": "2026-09-25",
               "name": "有給休暇"
             },
             {
-              "id": "ih-imp-2026-10-01-tclj",
-              "date": "2026-10-01",
-              "name": "有給休暇"
-            },
-            {
-              "id": "ih-imp-2026-10-02-c37a",
+              "id": "ih-1-2",
               "date": "2026-10-02",
               "name": "有給休暇"
             }
           ]
         },
         {
-          "id": "mem-imp-1791100644526-o74i3",
-          "name": "竹道",
+          "id": "mem-2",
+          "name": "田中 美咲",
+          "role": "主任",
+          "department": "UI/UX開発部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 55000,
+          "individualHolidays": [
+            {
+              "id": "ih-2-1",
+              "date": "2026-09-28",
+              "name": "創立記念代休"
+            }
+          ]
+        },
+        {
+          "id": "mem-3",
+          "name": "鈴木 一郎",
           "role": "担当",
-          "department": "ソリューションシステム本部",
+          "department": "品質管理部",
           "dailyWorkingHours": 8,
           "unitPrice": 48000,
+          "individualHolidays": [
+            {
+              "id": "ih-3-1",
+              "date": "2026-10-05",
+              "name": "有給休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-4",
+          "name": "高橋 涼介",
+          "role": "担当",
+          "department": "基幹開発部",
+          "dailyWorkingHours": 6,
+          "unitPrice": 45000,
+          "individualHolidays": [
+            {
+              "id": "ih-4-1",
+              "date": "2026-09-18",
+              "name": "介護/看護休暇"
+            }
+          ]
+        },
+        {
+          "id": "mem-7",
+          "name": "小林 誠",
+          "role": "担当",
+          "department": "プロダクト推進部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 48000,
+          "individualHolidays": []
+        },
+        {
+          "id": "mem-8",
+          "name": "山本 健太",
+          "role": "研修生",
+          "department": "品質管理部",
+          "dailyWorkingHours": 8,
+          "unitPrice": 32000,
           "individualHolidays": []
         }
       ],
@@ -2287,7 +2627,7 @@
       "features": [
         {
           "id": "est-f-1791100653133-1",
-          "name": "１",
+          "name": "２",
           "category": "一般機能",
           "assignee": "江口",
           "estimatedWorkload": 10,
@@ -2295,9 +2635,30 @@
           "estimatedAmount": 550000,
           "description": "",
           "processes": [
-            { "id": "est-p-1791100653133-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
-            { "id": "est-p-1791100653133-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
-            { "id": "est-p-1791100653133-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+            {
+              "id": "est-p-1791100653133-1",
+              "name": "基本・詳細設計",
+              "workload": 3,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 165000
+            },
+            {
+              "id": "est-p-1791100653133-2",
+              "name": "実装",
+              "workload": 5,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 275000
+            },
+            {
+              "id": "est-p-1791100653133-3",
+              "name": "単体テスト",
+              "workload": 2,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 110000
+            }
           ]
         },
         {
@@ -2310,9 +2671,30 @@
           "estimatedAmount": 550000,
           "description": "",
           "processes": [
-            { "id": "est-p-1791100660123-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
-            { "id": "est-p-1791100660123-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
-            { "id": "est-p-1791100660123-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+            {
+              "id": "est-p-1791100660123-1",
+              "name": "基本・詳細設計",
+              "workload": 3,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 165000
+            },
+            {
+              "id": "est-p-1791100660123-2",
+              "name": "実装",
+              "workload": 5,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 275000
+            },
+            {
+              "id": "est-p-1791100660123-3",
+              "name": "単体テスト",
+              "workload": 2,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 110000
+            }
           ]
         },
         {
@@ -2325,14 +2707,35 @@
           "estimatedAmount": 550000,
           "description": "",
           "processes": [
-            { "id": "est-p-1791100664204-1", "name": "基本・詳細設計", "workload": 3, "assignee": "江口", "unitPrice": 55000, "amount": 165000 },
-            { "id": "est-p-1791100664204-2", "name": "実装", "workload": 5, "assignee": "江口", "unitPrice": 55000, "amount": 275000 },
-            { "id": "est-p-1791100664204-3", "name": "単体テスト", "workload": 2, "assignee": "江口", "unitPrice": 55000, "amount": 110000 }
+            {
+              "id": "est-p-1791100664204-1",
+              "name": "基本・詳細設計",
+              "workload": 3,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 165000
+            },
+            {
+              "id": "est-p-1791100664204-2",
+              "name": "実装",
+              "workload": 5,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 275000
+            },
+            {
+              "id": "est-p-1791100664204-3",
+              "name": "単体テスト",
+              "workload": 2,
+              "assignee": "江口",
+              "unitPrice": 55000,
+              "amount": 110000
+            }
           ]
         }
       ],
       "createdAt": "2026-10-04",
-      "updatedAt": "2026-10-04",
+      "updatedAt": "2026-10-05",
       "linkedProjectId": "proj-1791100674066",
       "linkedProjectName": "ええええ",
       "linkedAt": "2026-10-04"
@@ -2368,11 +2771,51 @@
           "estimatedAmount": 1320000,
           "description": "JWT認証・OAuth2.0ソーシャルログイン連携",
           "processes": [
-            { "id": "est-p-1-1", "name": "基本・詳細設計", "workload": 6, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 330000, "notes": "認証フロー・画面設計" },
-            { "id": "est-p-1-2", "name": "設計レビュー", "workload": 2, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 110000, "notes": "セキュリティレビュー" },
-            { "id": "est-p-1-3", "name": "実装", "workload": 10, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 550000, "notes": "JWT/OAuth2.0実装" },
-            { "id": "est-p-1-4", "name": "実装レビュー", "workload": 2, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 110000, "notes": "コードレビュー" },
-            { "id": "est-p-1-5", "name": "単体テスト", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000, "notes": "単体テスト・検証" }
+            {
+              "id": "est-p-1-1",
+              "name": "基本・詳細設計",
+              "workload": 6,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 330000,
+              "notes": "認証フロー・画面設計"
+            },
+            {
+              "id": "est-p-1-2",
+              "name": "設計レビュー",
+              "workload": 2,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 110000,
+              "notes": "セキュリティレビュー"
+            },
+            {
+              "id": "est-p-1-3",
+              "name": "実装",
+              "workload": 10,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 550000,
+              "notes": "JWT/OAuth2.0実装"
+            },
+            {
+              "id": "est-p-1-4",
+              "name": "実装レビュー",
+              "workload": 2,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 110000,
+              "notes": "コードレビュー"
+            },
+            {
+              "id": "est-p-1-5",
+              "name": "単体テスト",
+              "workload": 4,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 220000,
+              "notes": "単体テスト・検証"
+            }
           ]
         },
         {
@@ -2386,11 +2829,51 @@
           "estimatedAmount": 1540000,
           "description": "Elasticsearch全文検索・カテゴリ階層フィルタ",
           "processes": [
-            { "id": "est-p-2-1", "name": "基本・詳細設計", "workload": 7, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 385000, "notes": "検索クエリ・UI設計" },
-            { "id": "est-p-2-2", "name": "設計レビュー", "workload": 2, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 110000, "notes": "パフォーマンス確認" },
-            { "id": "est-p-2-3", "name": "実装", "workload": 12, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 660000, "notes": "Elasticsearch連携・UI" },
-            { "id": "est-p-2-4", "name": "実装レビュー", "workload": 2, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 110000, "notes": "PR承認" },
-            { "id": "est-p-2-5", "name": "単体テスト", "workload": 5, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 275000, "notes": "検索精度・負荷検証" }
+            {
+              "id": "est-p-2-1",
+              "name": "基本・詳細設計",
+              "workload": 7,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 385000,
+              "notes": "検索クエリ・UI設計"
+            },
+            {
+              "id": "est-p-2-2",
+              "name": "設計レビュー",
+              "workload": 2,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 110000,
+              "notes": "パフォーマンス確認"
+            },
+            {
+              "id": "est-p-2-3",
+              "name": "実装",
+              "workload": 12,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 660000,
+              "notes": "Elasticsearch連携・UI"
+            },
+            {
+              "id": "est-p-2-4",
+              "name": "実装レビュー",
+              "workload": 2,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 110000,
+              "notes": "PR承認"
+            },
+            {
+              "id": "est-p-2-5",
+              "name": "単体テスト",
+              "workload": 5,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 275000,
+              "notes": "検索精度・負荷検証"
+            }
           ]
         },
         {
@@ -2404,11 +2887,51 @@
           "estimatedAmount": 1632000,
           "description": "Stripe決済・在庫引当トランザクション",
           "processes": [
-            { "id": "est-p-3-1", "name": "要件定義・設計", "workload": 8, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 384000, "notes": "決済API・引当設計" },
-            { "id": "est-p-3-2", "name": "設計レビュー", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000, "notes": "トランザクション設計承認" },
-            { "id": "est-p-3-3", "name": "実装", "workload": 15, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 720000, "notes": "Stripe決済・カート実装" },
-            { "id": "est-p-3-4", "name": "実装レビュー", "workload": 2, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 96000, "notes": "コードレビュー" },
-            { "id": "est-p-3-5", "name": "単体テスト", "workload": 6, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 288000, "notes": "異常系・決済モック検証" }
+            {
+              "id": "est-p-3-1",
+              "name": "要件定義・設計",
+              "workload": 8,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 384000,
+              "notes": "決済API・引当設計"
+            },
+            {
+              "id": "est-p-3-2",
+              "name": "設計レビュー",
+              "workload": 3,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 144000,
+              "notes": "トランザクション設計承認"
+            },
+            {
+              "id": "est-p-3-3",
+              "name": "実装",
+              "workload": 15,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 720000,
+              "notes": "Stripe決済・カート実装"
+            },
+            {
+              "id": "est-p-3-4",
+              "name": "実装レビュー",
+              "workload": 2,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 96000,
+              "notes": "コードレビュー"
+            },
+            {
+              "id": "est-p-3-5",
+              "name": "単体テスト",
+              "workload": 6,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 288000,
+              "notes": "異常系・決済モック検証"
+            }
           ]
         },
         {
@@ -2422,11 +2945,51 @@
           "estimatedAmount": 936000,
           "description": "領収書PDF出力・配送ステータス追跡",
           "processes": [
-            { "id": "est-p-4-1", "name": "基本・詳細設計", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000, "notes": "PDF帳票・画面設計" },
-            { "id": "est-p-4-2", "name": "設計レビュー", "workload": 1.5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 72000, "notes": "レイアウトレビュー" },
-            { "id": "est-p-4-3", "name": "実装", "workload": 8, "assignee": "小林 誠", "unitPrice": 48000, "amount": 384000, "notes": "PDF生成・履歴一覧" },
-            { "id": "est-p-4-4", "name": "実装レビュー", "workload": 1, "assignee": "小林 誠", "unitPrice": 48000, "amount": 48000, "notes": "コード承認" },
-            { "id": "est-p-4-5", "name": "単体テスト", "workload": 4, "assignee": "小林 誠", "unitPrice": 48000, "amount": 192000, "notes": "PDF描画テスト" }
+            {
+              "id": "est-p-4-1",
+              "name": "基本・詳細設計",
+              "workload": 5,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 240000,
+              "notes": "PDF帳票・画面設計"
+            },
+            {
+              "id": "est-p-4-2",
+              "name": "設計レビュー",
+              "workload": 1.5,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 72000,
+              "notes": "レイアウトレビュー"
+            },
+            {
+              "id": "est-p-4-3",
+              "name": "実装",
+              "workload": 8,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 384000,
+              "notes": "PDF生成・履歴一覧"
+            },
+            {
+              "id": "est-p-4-4",
+              "name": "実装レビュー",
+              "workload": 1,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 48000,
+              "notes": "コード承認"
+            },
+            {
+              "id": "est-p-4-5",
+              "name": "単体テスト",
+              "workload": 4,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 192000,
+              "notes": "PDF描画テスト"
+            }
           ]
         }
       ]
@@ -2462,9 +3025,33 @@
           "estimatedAmount": 935000,
           "description": "位置情報測位とオフライン打刻キャッシュ",
           "processes": [
-            { "id": "est-p-201-1", "name": "設計", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000, "notes": "GPS測位仕様" },
-            { "id": "est-p-201-2", "name": "実装", "workload": 8, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 440000, "notes": "モバイル打刻UI" },
-            { "id": "est-p-201-3", "name": "テスト", "workload": 5, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 275000, "notes": "端末実機検証" }
+            {
+              "id": "est-p-201-1",
+              "name": "設計",
+              "workload": 4,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 220000,
+              "notes": "GPS測位仕様"
+            },
+            {
+              "id": "est-p-201-2",
+              "name": "実装",
+              "workload": 8,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 440000,
+              "notes": "モバイル打刻UI"
+            },
+            {
+              "id": "est-p-201-3",
+              "name": "テスト",
+              "workload": 5,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 275000,
+              "notes": "端末実機検証"
+            }
           ]
         },
         {
@@ -2478,9 +3065,33 @@
           "estimatedAmount": 990000,
           "description": "スマホ撮影レシートのOCR解析・仕訳自動作成",
           "processes": [
-            { "id": "est-p-202-1", "name": "設計", "workload": 5, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 225000, "notes": "OCRパラメータ設計" },
-            { "id": "est-p-202-2", "name": "実装", "workload": 11, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 495000, "notes": "画像認識・仕訳生成" },
-            { "id": "est-p-202-3", "name": "テスト", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000, "notes": "レシート精度検証" }
+            {
+              "id": "est-p-202-1",
+              "name": "設計",
+              "workload": 5,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 225000,
+              "notes": "OCRパラメータ設計"
+            },
+            {
+              "id": "est-p-202-2",
+              "name": "実装",
+              "workload": 11,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 495000,
+              "notes": "画像認識・仕訳生成"
+            },
+            {
+              "id": "est-p-202-3",
+              "name": "テスト",
+              "workload": 6,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 270000,
+              "notes": "レシート精度検証"
+            }
           ]
         }
       ]
@@ -2513,9 +3124,30 @@
           "estimatedAmount": 880000,
           "description": "ナレッジベース検索と類似質問レコメンド",
           "processes": [
-            { "id": "est-p-301-1", "name": "プロンプト・シナリオ設計", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000 },
-            { "id": "est-p-301-2", "name": "ボット実装・API結合", "workload": 8, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 440000 },
-            { "id": "est-p-301-3", "name": "応答精度評価テスト", "workload": 4, "assignee": "佐藤 健一", "unitPrice": 55000, "amount": 220000 }
+            {
+              "id": "est-p-301-1",
+              "name": "プロンプト・シナリオ設計",
+              "workload": 4,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 220000
+            },
+            {
+              "id": "est-p-301-2",
+              "name": "ボット実装・API結合",
+              "workload": 8,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 440000
+            },
+            {
+              "id": "est-p-301-3",
+              "name": "応答精度評価テスト",
+              "workload": 4,
+              "assignee": "佐藤 健一",
+              "unitPrice": 55000,
+              "amount": 220000
+            }
           ]
         },
         {
@@ -2529,9 +3161,30 @@
           "estimatedAmount": 576000,
           "description": "未解決案件のコンタクトセンター転送",
           "processes": [
-            { "id": "est-p-302-1", "name": "エスカレーション設計", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000 },
-            { "id": "est-p-302-2", "name": "オペレーターUI実装", "workload": 6, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 288000 },
-            { "id": "est-p-302-3", "name": "通話・引継ぎテスト", "workload": 3, "assignee": "鈴木 一郎", "unitPrice": 48000, "amount": 144000 }
+            {
+              "id": "est-p-302-1",
+              "name": "エスカレーション設計",
+              "workload": 3,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 144000
+            },
+            {
+              "id": "est-p-302-2",
+              "name": "オペレーターUI実装",
+              "workload": 6,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 288000
+            },
+            {
+              "id": "est-p-302-3",
+              "name": "通話・引継ぎテスト",
+              "workload": 3,
+              "assignee": "鈴木 一郎",
+              "unitPrice": 48000,
+              "amount": 144000
+            }
           ]
         },
         {
@@ -2545,9 +3198,30 @@
           "estimatedAmount": 990000,
           "description": "応対時間・解決率・頻出キーワード可視化",
           "processes": [
-            { "id": "est-p-303-1", "name": "指標定義・画面設計", "workload": 4, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 220000 },
-            { "id": "est-p-303-2", "name": "集計・グラフ描画実装", "workload": 9, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 495000 },
-            { "id": "est-p-303-3", "name": "集計整合性検証テスト", "workload": 5, "assignee": "田中 美咲", "unitPrice": 55000, "amount": 275000 }
+            {
+              "id": "est-p-303-1",
+              "name": "指標定義・画面設計",
+              "workload": 4,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 220000
+            },
+            {
+              "id": "est-p-303-2",
+              "name": "集計・グラフ描画実装",
+              "workload": 9,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 495000
+            },
+            {
+              "id": "est-p-303-3",
+              "name": "集計整合性検証テスト",
+              "workload": 5,
+              "assignee": "田中 美咲",
+              "unitPrice": 55000,
+              "amount": 275000
+            }
           ]
         },
         {
@@ -2561,9 +3235,30 @@
           "estimatedAmount": 960000,
           "description": "過去ログからのFAQ自動候補抽出",
           "processes": [
-            { "id": "est-p-304-1", "name": "抽出ロジック設計", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000 },
-            { "id": "est-p-304-2", "name": "ログ検索・生成バッチ実装", "workload": 10, "assignee": "小林 誠", "unitPrice": 48000, "amount": 480000 },
-            { "id": "est-p-304-3", "name": "抽出品質検証", "workload": 5, "assignee": "小林 誠", "unitPrice": 48000, "amount": 240000 }
+            {
+              "id": "est-p-304-1",
+              "name": "抽出ロジック設計",
+              "workload": 5,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 240000
+            },
+            {
+              "id": "est-p-304-2",
+              "name": "ログ検索・生成バッチ実装",
+              "workload": 10,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 480000
+            },
+            {
+              "id": "est-p-304-3",
+              "name": "抽出品質検証",
+              "workload": 5,
+              "assignee": "小林 誠",
+              "unitPrice": 48000,
+              "amount": 240000
+            }
           ]
         }
       ]
@@ -2596,9 +3291,30 @@
           "estimatedAmount": 1125000,
           "description": "レシート単位の高スループット非同期キュー処理",
           "processes": [
-            { "id": "est-p-401-1", "name": "API設計・キュー仕様", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000 },
-            { "id": "est-p-401-2", "name": "キューワーカー・同期API実装", "workload": 13, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 585000 },
-            { "id": "est-p-401-3", "name": "負荷検証・耐障害性テスト", "workload": 6, "assignee": "高橋 涼介", "unitPrice": 45000, "amount": 270000 }
+            {
+              "id": "est-p-401-1",
+              "name": "API設計・キュー仕様",
+              "workload": 6,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 270000
+            },
+            {
+              "id": "est-p-401-2",
+              "name": "キューワーカー・同期API実装",
+              "workload": 13,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 585000
+            },
+            {
+              "id": "est-p-401-3",
+              "name": "負荷検証・耐障害性テスト",
+              "workload": 6,
+              "assignee": "高橋 涼介",
+              "unitPrice": 45000,
+              "amount": 270000
+            }
           ]
         },
         {
@@ -2612,9 +3328,30 @@
           "estimatedAmount": 960000,
           "description": "店舗・倉庫間の在庫同期・引き当てロック機能",
           "processes": [
-            { "id": "est-p-402-1", "name": "引き当て・排他ロック設計", "workload": 7, "assignee": "山本 健太", "unitPrice": 32000, "amount": 224000 },
-            { "id": "est-p-402-2", "name": "在庫同期API実装", "workload": 15, "assignee": "山本 健太", "unitPrice": 32000, "amount": 480000 },
-            { "id": "est-p-402-3", "name": "店舗間移動シナリオテスト", "workload": 8, "assignee": "山本 健太", "unitPrice": 32000, "amount": 256000 }
+            {
+              "id": "est-p-402-1",
+              "name": "引き当て・排他ロック設計",
+              "workload": 7,
+              "assignee": "山本 健太",
+              "unitPrice": 32000,
+              "amount": 224000
+            },
+            {
+              "id": "est-p-402-2",
+              "name": "在庫同期API実装",
+              "workload": 15,
+              "assignee": "山本 健太",
+              "unitPrice": 32000,
+              "amount": 480000
+            },
+            {
+              "id": "est-p-402-3",
+              "name": "店舗間移動シナリオテスト",
+              "workload": 8,
+              "assignee": "山本 健太",
+              "unitPrice": 32000,
+              "amount": 256000
+            }
           ]
         }
       ]

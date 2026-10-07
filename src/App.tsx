@@ -30,6 +30,8 @@ import {
   updateEstimateApi,
   deleteEstimateApi,
   linkEstimateToProjectApi,
+  loadEstimatesFromLocalStorage,
+  saveEstimatesToLocalStorage,
 } from './utils/api';
 import { Header } from './components/Header';
 import { WbsGrid } from './components/WbsGrid';
@@ -51,11 +53,19 @@ import { exportWbsToCsv, exportMembersToCsv, exportHolidaysToCsv, exportProcessS
 import { AlertTriangle, Trash2, RotateCcw, Check, X, ShieldAlert, Sparkles } from 'lucide-react';
 
 export default function App() {
-  // メインメニュー / プロジェクト進捗管理 / 見積管理 画面切り替え状態
-  const [currentView, setCurrentView] = useState<'menu' | 'wbs' | 'estimates'>('menu');
+  // メインメニュー / プロジェクト進捗管理 / 見積管理 画面切り替え状態（セッション保持）
+  const [currentView, setCurrentView] = useState<'menu' | 'wbs' | 'estimates'>(() => {
+    try {
+      const saved = sessionStorage.getItem('paceup_current_view');
+      if (saved === 'wbs' || saved === 'estimates' || saved === 'menu') return saved;
+    } catch (e) {}
+    return 'menu';
+  });
 
-  // 見積管理データ状態
-  const [estimates, setEstimates] = useState<Estimate[]>(INITIAL_ESTIMATES);
+  // 見積管理データ状態（ローカル保存から即座に初期化し、初期データ戻りを防止）
+  const [estimates, setEstimates] = useState<Estimate[]>(() => {
+    return loadEstimatesFromLocalStorage();
+  });
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
   const [estimateToEdit, setEstimateToEdit] = useState<Estimate | null>(null);
 
@@ -66,7 +76,13 @@ export default function App() {
   // 複数プロジェクト状態
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   // 選択中のプロジェクトID ('all' = すべてのプロジェクト横断表示)
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('all');
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(() => {
+    try {
+      const saved = sessionStorage.getItem('paceup_selected_project_id');
+      if (saved) return saved;
+    } catch (e) {}
+    return 'all';
+  });
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -147,6 +163,7 @@ export default function App() {
         }
         if (Array.isArray(loadedEstimates) && loadedEstimates.length > 0) {
           setEstimates(loadedEstimates);
+          saveEstimatesToLocalStorage(loadedEstimates);
         }
         setIsLoading(false);
         setLastSavedAt(new Date());
@@ -157,6 +174,26 @@ export default function App() {
       isMounted = false;
     };
   }, []);
+
+  // 画面状態のセッション保持（期間修正やマスタ編集による意図しないトップ画面遷移を防止）
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('paceup_current_view', currentView);
+    } catch (e) {}
+  }, [currentView]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('paceup_selected_project_id', selectedProjectId);
+    } catch (e) {}
+  }, [selectedProjectId]);
+
+  // 見積データが更新されたらローカルストレージにもバックアップ保存
+  useEffect(() => {
+    if (Array.isArray(estimates) && estimates.length > 0) {
+      saveEstimatesToLocalStorage(estimates);
+    }
+  }, [estimates]);
 
   // 現在アクティブなプロジェクト（個別選択時）または第1プロジェクト
   const currentProject = useMemo(() => {
@@ -680,7 +717,7 @@ export default function App() {
     const hasLinkedEstimate = Boolean(projectToDelete.estimateId || projectToDelete.estimateNumber);
 
     setIsSaving(true);
-    const success = await deleteProjectApi(targetId);
+    const success = await deleteProjectApi(targetId, estimates);
     if (success) {
       setProjects((prev) => {
         const next = prev.filter((p) => p.id !== targetId);
@@ -712,8 +749,8 @@ export default function App() {
       }
 
       // 見積管理データ側のステータスを同期（見積自体は削除せず、連携情報のみ解除してステータスを受注承認済に戻す）
-      setEstimates((prev) =>
-        prev.map((e) => {
+      setEstimates((prev) => {
+        const next = prev.map((e) => {
           if (e.linkedProjectId === targetId || (projectToDelete.estimateId && e.id === projectToDelete.estimateId)) {
             return {
               ...e,
@@ -725,8 +762,11 @@ export default function App() {
             };
           }
           return e;
-        })
-      );
+        });
+        saveEstimatesToLocalStorage(next);
+        saveEstimatesApi(next).catch(() => {});
+        return next;
+      });
 
       setProjectToDelete(null);
       setIsSaving(false);
@@ -1032,15 +1072,20 @@ export default function App() {
   const handleSaveMembers = async (newMembers: Member[]) => {
     setIsSaving(true);
     setProjects((prev) =>
-      prev.map((p) =>
-        p.id === currentProject.id
-          ? { ...p, members: newMembers, updatedAt: new Date().toISOString().slice(0, 10) }
-          : p
-      )
+      prev.map((p) => ({
+        ...p,
+        members: newMembers,
+        updatedAt: new Date().toISOString().slice(0, 10),
+      }))
     );
     await saveMembersApi(currentProject.id, newMembers);
     setIsSaving(false);
     setLastSavedAt(new Date());
+    setAppToast({
+      type: 'success',
+      title: '担当者マスタを保存しました',
+      description: `${newMembers.length}名の担当者情報が全プロジェクトに正常に反映されました。`,
+    });
   };
 
   // 工程構成マスタ保存

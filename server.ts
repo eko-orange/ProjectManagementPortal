@@ -46,7 +46,7 @@ function loadStore(): AppStore {
           processPatterns: Array.isArray(parsed.processPatterns) && parsed.processPatterns.length > 0
             ? parsed.processPatterns
             : JSON.parse(JSON.stringify(INITIAL_PROCESS_STRUCTURE_PATTERNS)),
-          estimates: Array.isArray(parsed.estimates) && parsed.estimates.length > 0
+          estimates: Array.isArray(parsed.estimates)
             ? parsed.estimates
             : JSON.parse(JSON.stringify(INITIAL_ESTIMATES)),
         };
@@ -636,8 +636,15 @@ app.get('/api/estimates/:id', (req, res) => {
   res.json({ estimate });
 });
 
-// 新規見積作成
+// 新規見積作成 (一括保存にも対応)
 app.post('/api/estimates', (req, res) => {
+  // 一括保存の場合
+  if (Array.isArray(req.body.estimates)) {
+    currentStore.estimates = req.body.estimates;
+    saveStore(currentStore);
+    return res.json({ success: true, estimates: currentStore.estimates });
+  }
+
   const estimateData: Estimate = req.body;
   if (!estimateData.title?.trim()) {
     return res.status(400).json({ error: '見積件名は必須です' });
@@ -674,6 +681,16 @@ app.post('/api/estimates', (req, res) => {
   saveStore(currentStore);
 
   res.status(201).json({ success: true, estimate: newEstimate });
+});
+
+// 見積一括更新
+app.put('/api/estimates', (req, res) => {
+  if (Array.isArray(req.body.estimates)) {
+    currentStore.estimates = req.body.estimates;
+    saveStore(currentStore);
+    return res.json({ success: true, estimates: currentStore.estimates });
+  }
+  res.status(400).json({ error: '無効なデータ形式です' });
 });
 
 // 見積情報更新
