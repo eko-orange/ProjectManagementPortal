@@ -522,13 +522,14 @@ export const deleteSnapshotApi = deleteProjectSnapshotApi;
 export async function importWbsApi(
   projects: Project[],
   mode: 'replace' | 'append' = 'append',
-  workloadUnit?: '人日' | '人時'
+  workloadUnit?: '人日' | '人時',
+  weeklyMeetingHours?: { [dayOfWeek: number]: number }
 ): Promise<{ success: boolean; count?: number; error?: string }> {
   try {
     const res = await fetch('/api/import/wbs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ projects, mode, workloadUnit, syncWorkloadUnit: true }),
+      body: JSON.stringify({ projects, mode, workloadUnit, syncWorkloadUnit: true, weeklyMeetingHours }),
     });
     if (res.ok) {
       const data = await res.json();

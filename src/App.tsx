@@ -1399,7 +1399,11 @@ export default function App() {
     setIsLoading(true);
     try {
       const fresh = await fetchProjects();
-      setProjects(fresh.projects || INITIAL_PROJECTS);
+      const updatedProjects = fresh.projects || INITIAL_PROJECTS;
+      setProjects(updatedProjects);
+      if (selectedProjectId !== 'all' && !updatedProjects.some((p) => p.id === selectedProjectId)) {
+        setSelectedProjectId(fresh.activeProjectId || updatedProjects[0]?.id || 'all');
+      }
       if (type === 'process_structure') {
         const freshPatterns = await fetchProcessPatternsApi();
         setProcessPatterns(freshPatterns);
@@ -1470,6 +1474,9 @@ export default function App() {
           onOpenMemberMaster={() => setIsMemberMasterOpen(true)}
           onOpenHolidayModal={() => setIsHolidaysOpen(true)}
           onOpenProcessStructureModal={() => setIsProcessStructureOpen(true)}
+          onOpenMeetingHours={() => setIsMeetingHoursModalOpen(true)}
+          onExportProcessStructureCsv={handleExportProcessStructureCsv}
+          onExportHolidaysCsv={handleExportHolidaysCsv}
           onOpenImportData={(tab) => handleOpenImportData(tab || 'wbs')}
           onExportMembersCsv={handleExportMembersCsv}
           onOpenResetDemoModal={handleOpenResetDemoModal}

@@ -46,6 +46,9 @@ interface EstimateManagerProps {
   onImportEstimates: (importedEstimates: Estimate[]) => void;
 }
 
+// 概算金額の表示制御（将来の権限ロール実装時に権限チェックで有効化。現在は非表示）
+const SHOW_ESTIMATE_AMOUNTS = false;
+
 export const EstimateManager: React.FC<EstimateManagerProps> = ({
   estimates,
   projects,
@@ -258,16 +261,22 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
           {/* 総見積件数 & 金額 */}
           <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-1">
             <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>総見積件数 / 総金額</span>
+              <span>{SHOW_ESTIMATE_AMOUNTS ? '総見積件数 / 総金額' : '総見積登録件数'}</span>
               <Calculator className="w-4 h-4 text-indigo-600" />
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-slate-900 font-mono">{stats.totalCount}</span>
               <span className="text-xs text-slate-500">件</span>
             </div>
-            <div className="text-xs font-bold text-indigo-700 font-mono">
-              ¥{stats.totalAmount.toLocaleString()} <span className="text-[10px] text-slate-400 font-normal">(税込概算)</span>
-            </div>
+            {SHOW_ESTIMATE_AMOUNTS ? (
+              <div className="text-xs font-bold text-indigo-700 font-mono">
+                ¥{stats.totalAmount.toLocaleString()} <span className="text-[10px] text-slate-400 font-normal">(税込概算)</span>
+              </div>
+            ) : (
+              <div className="text-[11px] text-slate-500">
+                登録機能数: <strong className="font-mono text-slate-700">{estimates.reduce((acc, e) => acc + e.features.length, 0)}</strong> 機能
+              </div>
+            )}
           </div>
 
           {/* 受注・連携状況 */}
@@ -584,10 +593,17 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                     {/* 金額・工数サマリー ＆ アクション */}
                     <div className="flex flex-col sm:items-end gap-2 text-right">
                       <div>
-                        <div className="text-lg font-bold text-slate-900 font-mono">
-                          ¥{totalAmountWithTax.toLocaleString()}
-                          <span className="text-[10px] text-slate-500 font-normal ml-1">(税込)</span>
-                        </div>
+                        {SHOW_ESTIMATE_AMOUNTS ? (
+                          <div className="text-lg font-bold text-slate-900 font-mono">
+                            ¥{totalAmountWithTax.toLocaleString()}
+                            <span className="text-[10px] text-slate-500 font-normal ml-1">(税込)</span>
+                          </div>
+                        ) : (
+                          <div className="text-sm font-bold text-indigo-700 flex items-center justify-end gap-1.5">
+                            <Layers className="w-3.5 h-3.5 text-indigo-600" />
+                            <span>登録機能: {estimate.features.length}機能</span>
+                          </div>
+                        )}
                         <div className="text-xs text-slate-500 flex items-center justify-end gap-2 font-mono">
                           <span>概算工数: <strong>{totalEstWorkload}</strong> {estimate.workloadUnit}</span>
                           <span>|</span>
@@ -668,9 +684,11 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                           <Layers className="w-3.5 h-3.5 text-indigo-600" />
                           <span>登録機能一覧 ({estimate.features.length}機能)</span>
                         </span>
-                        <span className="text-slate-500 font-mono text-[11px]">
-                          単価設定: ¥{estimate.unitPrice.toLocaleString()} / {estimate.workloadUnit}
-                        </span>
+                        {SHOW_ESTIMATE_AMOUNTS && (
+                          <span className="text-slate-500 font-mono text-[11px]">
+                            単価設定: ¥{estimate.unitPrice.toLocaleString()} / {estimate.workloadUnit}
+                          </span>
+                        )}
                       </div>
 
                       <div className="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-2xs">
@@ -684,7 +702,9 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                               <th className="py-2 px-2 w-24 text-right">Step数</th>
                               <th className="py-2 px-2 w-24 text-right">概算工数</th>
                               <th className="py-2 px-2 w-28 text-right">想定生産性</th>
-                              <th className="py-2 px-3 w-28 text-right">概算金額</th>
+                              {SHOW_ESTIMATE_AMOUNTS && (
+                                <th className="py-2 px-3 w-28 text-right">概算金額</th>
+                              )}
                               <th className="py-2 px-3">概要・前提</th>
                             </tr>
                           </thead>
@@ -778,9 +798,11 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                                         <span className="text-slate-400">-</span>
                                       )}
                                     </td>
-                                    <td className="py-2.5 px-3 text-right font-mono font-bold text-slate-900 align-top">
-                                      ¥{(f.estimatedAmount || f.estimatedWorkload * estimate.unitPrice).toLocaleString()}
-                                    </td>
+                                    {SHOW_ESTIMATE_AMOUNTS && (
+                                      <td className="py-2.5 px-3 text-right font-mono font-bold text-slate-900 align-top">
+                                        ¥{(f.estimatedAmount || f.estimatedWorkload * estimate.unitPrice).toLocaleString()}
+                                      </td>
+                                    )}
                                     <td className="py-2.5 px-3 text-slate-500 text-[11px] truncate max-w-[200px] align-top" title={f.description || ''}>
                                       {f.description || '-'}
                                     </td>
@@ -789,7 +811,7 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                                   {/* 工程一覧の展開表示 */}
                                   {isProcExpanded && hasProcesses && (
                                     <tr className="bg-slate-50/80 border-b border-indigo-100">
-                                      <td colSpan={9} className="p-3 pl-8 pr-4">
+                                      <td colSpan={SHOW_ESTIMATE_AMOUNTS ? 9 : 8} className="p-3 pl-8 pr-4">
                                         <div className="bg-white rounded-lg border border-indigo-200 overflow-hidden shadow-2xs">
                                           <div className="px-3.5 py-2 bg-gradient-to-r from-indigo-50/80 to-slate-50 border-b border-indigo-100 flex items-center justify-between text-xs">
                                             <div className="flex items-center gap-2">
@@ -813,8 +835,12 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                                                 <th className="py-1.5 px-3">工程名</th>
                                                 <th className="py-1.5 px-2 w-32">工程担当者</th>
                                                 <th className="py-1.5 px-2 w-28 text-right">工数 ({estimate.workloadUnit})</th>
-                                                <th className="py-1.5 px-2 w-28 text-right">単価</th>
-                                                <th className="py-1.5 px-3 w-28 text-right">概算金額</th>
+                                                {SHOW_ESTIMATE_AMOUNTS && (
+                                                  <>
+                                                    <th className="py-1.5 px-2 w-28 text-right">単価</th>
+                                                    <th className="py-1.5 px-3 w-28 text-right">概算金額</th>
+                                                  </>
+                                                )}
                                                 <th className="py-1.5 px-3">備考</th>
                                               </tr>
                                             </thead>
@@ -840,12 +866,16 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                                                   <td className="py-1.5 px-2 text-right font-mono font-bold text-indigo-700">
                                                     {p.workload} {estimate.workloadUnit}
                                                   </td>
-                                                  <td className="py-1.5 px-2 text-right font-mono text-slate-600">
-                                                    ¥{(p.unitPrice || f.unitPrice || estimate.unitPrice).toLocaleString()}
-                                                  </td>
-                                                  <td className="py-1.5 px-3 text-right font-mono font-semibold text-slate-900">
-                                                    ¥{(p.amount || Math.round(p.workload * (p.unitPrice || f.unitPrice || estimate.unitPrice))).toLocaleString()}
-                                                  </td>
+                                                  {SHOW_ESTIMATE_AMOUNTS && (
+                                                    <>
+                                                      <td className="py-1.5 px-2 text-right font-mono text-slate-600">
+                                                        ¥{(p.unitPrice || f.unitPrice || estimate.unitPrice).toLocaleString()}
+                                                      </td>
+                                                      <td className="py-1.5 px-3 text-right font-mono font-semibold text-slate-900">
+                                                        ¥{(p.amount || Math.round(p.workload * (p.unitPrice || f.unitPrice || estimate.unitPrice))).toLocaleString()}
+                                                      </td>
+                                                    </>
+                                                  )}
                                                   <td className="py-1.5 px-3 text-slate-500 truncate max-w-[200px]" title={p.notes || ''}>
                                                     {p.notes || '-'}
                                                   </td>
@@ -860,21 +890,35 @@ export const EstimateManager: React.FC<EstimateManagerProps> = ({
                                                 <td className="py-1.5 px-2 text-right font-mono text-indigo-700">
                                                   {f.estimatedWorkload} {estimate.workloadUnit}
                                                 </td>
-                                                <td className="py-1.5 px-2 text-right text-slate-500 text-[11px]">
-                                                  金額合計:
-                                                </td>
-                                                <td className="py-1.5 px-3 text-right font-mono text-indigo-950">
-                                                  ¥{(f.estimatedAmount || 0).toLocaleString()}
-                                                </td>
-                                                <td className="py-1.5 px-3 text-right">
-                                                  <button
-                                                    type="button"
-                                                    onClick={() => onOpenEditModal(estimate)}
-                                                    className="text-[10px] text-indigo-600 hover:text-indigo-800 hover:underline cursor-pointer"
-                                                  >
-                                                    見積編集で変更
-                                                  </button>
-                                                </td>
+                                                {SHOW_ESTIMATE_AMOUNTS ? (
+                                                  <>
+                                                    <td className="py-1.5 px-2 text-right text-slate-500 text-[11px]">
+                                                      金額合計:
+                                                    </td>
+                                                    <td className="py-1.5 px-3 text-right font-mono text-indigo-950">
+                                                      ¥{(f.estimatedAmount || 0).toLocaleString()}
+                                                    </td>
+                                                    <td className="py-1.5 px-3 text-right">
+                                                      <button
+                                                        type="button"
+                                                        onClick={() => onOpenEditModal(estimate)}
+                                                        className="text-[10px] text-indigo-600 hover:text-indigo-800 hover:underline cursor-pointer"
+                                                      >
+                                                        見積編集で変更
+                                                      </button>
+                                                    </td>
+                                                  </>
+                                                ) : (
+                                                  <td className="py-1.5 px-3 text-right" colSpan={2}>
+                                                    <button
+                                                      type="button"
+                                                      onClick={() => onOpenEditModal(estimate)}
+                                                      className="text-[10px] text-indigo-600 hover:text-indigo-800 hover:underline cursor-pointer"
+                                                    >
+                                                      見積編集で変更
+                                                    </button>
+                                                  </td>
+                                                )}
                                               </tr>
                                             </tfoot>
                                           </table>

@@ -343,6 +343,12 @@ export function autoScheduleProcesses<T extends {
       ? workloadVal
       : workloadVal * defaultHoursPerDay;
 
+    // CSV指定等で開始日が前工程終了日より遅い指定の場合、その開始日を採用
+    if (proc.startDate && proc.startDate > currentDay) {
+      currentDay = proc.startDate;
+      remainingHoursInDay = null;
+    }
+
     // 1. 開始可能日の特定
     if (remainingHoursInDay === null || remainingHoursInDay <= 0.0001) {
       // 残り時間がない場合は、次の稼働可能日へスライド

@@ -631,38 +631,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
 
   const totalHitsCount = flatRows.filter((r) => !r.isParent).length;
 
-  // 表示対象の総Step数および全体生産性の計算
-  const { totalVisibleSteps, overallActualProductivity, overallPlannedProductivity } = useMemo(() => {
-    let steps = 0;
-    let totalActualW = 0;
-    let totalPlannedW = 0;
-
-    filteredProjectData.forEach((pd) => {
-      if (!pd.shouldShow) return;
-      pd.displayFeatures.forEach((f) => {
-        if (f.stepCount !== undefined && f.stepCount !== null && !isNaN(Number(f.stepCount))) {
-          steps += Math.max(0, Number(f.stepCount));
-        }
-        (f.processes || []).forEach((p) => {
-          totalActualW += Number(p.actualWorkload) || 0;
-          totalPlannedW += Number(p.plannedWorkload) || 0;
-        });
-      });
-    });
-
-    const roundedActual = Math.round(totalActualW * 10) / 10;
-    const roundedPlanned = Math.round(totalPlannedW * 10) / 10;
-
-    const actualProd = steps > 0 && roundedActual > 0 ? Math.round((steps / roundedActual) * 10) / 10 : undefined;
-    const plannedProd = steps > 0 && roundedPlanned > 0 ? Math.round((steps / roundedPlanned) * 10) / 10 : undefined;
-
-    return {
-      totalVisibleSteps: steps,
-      overallActualProductivity: actualProd,
-      overallPlannedProductivity: plannedProd,
-    };
-  }, [filteredProjectData]);
-
   return (
     <div className="flex-1 flex flex-col bg-white overflow-hidden min-h-0 h-full">
       {/* =========================================================================
@@ -677,25 +645,8 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
             全 <strong className="text-slate-800 font-mono">{totalHitsCount}</strong> 工程
           </span>
           <span className="text-slate-300">•</span>
-          <span className="text-[11px] text-slate-600 font-medium" title="表示対象機能の総Step数（開発規模）">
-            総Step数: <strong className="text-indigo-700 font-mono font-bold">{totalVisibleSteps > 0 ? totalVisibleSteps.toLocaleString() : '-'}</strong> {totalVisibleSteps > 0 ? 'Step' : ''}
-          </span>
-          <span className="text-slate-300">•</span>
-          <span
-            className="text-[11px] text-slate-600 font-medium"
-            title={
-              totalVisibleSteps > 0
-                ? `全体生産性 (Step/${settings.workloadUnit}): 実績 ${overallActualProductivity ?? '-'} / 予定 ${overallPlannedProductivity ?? '-'}`
-                : 'Step数未入力'
-            }
-          >
-            全体生産性: <strong className="text-emerald-700 font-mono font-bold">
-              {overallActualProductivity !== undefined
-                ? `${overallActualProductivity} Step/${settings.workloadUnit}`
-                : overallPlannedProductivity !== undefined
-                ? `(予)${overallPlannedProductivity} Step/${settings.workloadUnit}`
-                : '-'}
-            </strong>
+          <span className="text-[11px] text-slate-500 font-medium">
+            ※ Step数および生産性は「見積管理」で一元管理されています
           </span>
         </div>
 
@@ -850,23 +801,11 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                     </div>
                   </div>
                 </th>
-                <th className="px-2 py-2 font-bold text-slate-700 w-24 border-r border-slate-200 text-right">
-                  <div className="flex flex-col items-end justify-center leading-tight">
-                    <span>Step数</span>
-                    <span className="text-[10px] font-normal text-slate-400">規模</span>
-                  </div>
-                </th>
                 <th className="px-2 py-2 font-bold text-slate-700 w-16 border-r border-slate-200 text-right">
                   予定({settings.workloadUnit})
                 </th>
                 <th className="px-2 py-2 font-bold text-slate-700 w-16 border-r border-slate-200 text-right">
                   実績({settings.workloadUnit})
-                </th>
-                <th className="px-2 py-2 font-bold text-slate-700 w-28 border-r border-slate-200 text-right">
-                  <div className="flex flex-col items-end justify-center leading-tight">
-                    <span>生産性</span>
-                    <span className="text-[10px] font-normal text-slate-400">Step/{settings.workloadUnit}</span>
-                  </div>
                 </th>
                 <th className="px-2 py-2 font-bold text-slate-700 w-36 border-r border-slate-200 text-center">
                   <div className="flex flex-col items-center justify-center leading-tight">
@@ -910,7 +849,7 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
             <tbody className="divide-y divide-slate-200">
               {flatRows.length === 0 && (
                 <tr>
-                  <td colSpan={12} className="py-12 text-center text-slate-500 bg-slate-50/50">
+                  <td colSpan={10} className="py-12 text-center text-slate-500 bg-slate-50/50">
                     <p className="text-sm font-medium">
                       {assigneeFilter
                         ? `担当者「${assigneeFilter}」に一致する工程はありません`
@@ -988,17 +927,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                         </span>
                       </td>
 
-                      {/* プロジェクト総Step数 */}
-                      <td className="px-2 py-1.5 border-r border-slate-700 text-right font-mono font-bold text-indigo-300 align-middle">
-                        {pSum.totalStepCount > 0 ? (
-                          <span title={`プロジェクト「${proj.name}」の総Step数: ${pSum.totalStepCount.toLocaleString()} Step`}>
-                            {pSum.totalStepCount.toLocaleString()}
-                          </span>
-                        ) : (
-                          <span className="text-slate-500 font-normal">-</span>
-                        )}
-                      </td>
-
                       {/* 予定工数合計 */}
                       <td className="px-2 py-1.5 border-r border-slate-700 text-right font-mono font-bold text-slate-100 align-middle">
                         {pSum.totalPlannedWorkload}
@@ -1007,35 +935,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                       {/* 実績工数合計 */}
                       <td className="px-2 py-1.5 border-r border-slate-700 text-right font-mono font-bold text-slate-100 align-middle">
                         {pSum.totalActualWorkload}
-                      </td>
-
-                      {/* プロジェクト生産性 */}
-                      <td className="px-2 py-1.5 border-r border-slate-700 text-right align-middle">
-                        {pSum.totalStepCount > 0 ? (
-                          <div className="flex flex-col items-end justify-center leading-tight font-mono">
-                            {pSum.actualProductivity !== undefined ? (
-                              <>
-                                <span className="font-bold text-emerald-300 text-xs">
-                                  {pSum.actualProductivity}
-                                </span>
-                                {pSum.plannedProductivity !== undefined && (
-                                  <span className="text-[9px] text-slate-400">
-                                    (予: {pSum.plannedProductivity})
-                                  </span>
-                                )}
-                              </>
-                            ) : pSum.plannedProductivity !== undefined ? (
-                              <span className="text-indigo-200 text-xs">
-                                <span className="text-[9px] text-indigo-400 mr-0.5">予</span>
-                                {pSum.plannedProductivity}
-                              </span>
-                            ) : (
-                              <span className="text-slate-500 font-normal text-xs">-</span>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-slate-500 font-normal text-xs">-</span>
-                        )}
                       </td>
 
                       {/* 期間（開始 / 終了） */}
@@ -1239,25 +1138,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                         -
                       </td>
 
-                      {/* 機能Step数入力 */}
-                      <td className="px-1.5 py-1 border-r border-slate-200 text-right align-middle">
-                        <div className="flex items-center justify-end">
-                          <input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={feature.stepCount !== undefined && feature.stepCount !== null ? feature.stepCount : ''}
-                            onChange={(e) => {
-                              const val = e.target.value === '' ? undefined : Math.max(0, parseInt(e.target.value, 10) || 0);
-                              onUpdateFeature(row.projectId, feature.id, { stepCount: val });
-                            }}
-                            placeholder="Step数"
-                            className="w-20 px-1.5 py-0.5 text-right font-mono text-xs font-semibold text-slate-800 bg-white border border-slate-300 rounded hover:border-indigo-400 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-500 transition-colors"
-                            title="機能のStep数（行数）を入力"
-                          />
-                        </div>
-                      </td>
-
                       {/* 予定工数合計 */}
                       <td className="px-2 py-1.5 border-r border-slate-200 text-right font-mono font-bold text-slate-800 align-middle">
                         {summary?.totalPlannedWorkload ?? 0}
@@ -1266,35 +1146,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                       {/* 実績工数合計 */}
                       <td className="px-2 py-1.5 border-r border-slate-200 text-right font-mono font-bold text-slate-800 align-middle">
                         {summary?.totalActualWorkload ?? 0}
-                      </td>
-
-                      {/* 機能生産性表示 */}
-                      <td className="px-2 py-1.5 border-r border-slate-200 text-right align-middle">
-                        {feature.stepCount && feature.stepCount > 0 ? (
-                          <div className="flex flex-col items-end justify-center leading-tight font-mono">
-                            {summary?.actualProductivity !== undefined ? (
-                              <>
-                                <span className="font-bold text-emerald-700 text-xs">
-                                  {summary.actualProductivity}
-                                </span>
-                                {summary.plannedProductivity !== undefined && (
-                                  <span className="text-[9px] text-slate-400">
-                                    (予: {summary.plannedProductivity})
-                                  </span>
-                                )}
-                              </>
-                            ) : summary?.plannedProductivity !== undefined ? (
-                              <span className="text-slate-600 text-xs">
-                                <span className="text-[9px] text-indigo-600 font-semibold mr-0.5">予</span>
-                                {summary.plannedProductivity}
-                              </span>
-                            ) : (
-                              <span className="text-slate-400 text-xs">-</span>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-slate-400 text-xs">-</span>
-                        )}
                       </td>
 
                       {/* 期間（開始日 / 終了日を1列で上下表示） */}
@@ -1534,11 +1385,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                         </select>
                       </td>
 
-                      {/* Step数（工程は機能単位集計のため - 表示） */}
-                      <td className="px-2 py-1 border-r border-slate-200 text-center text-slate-300 text-xs font-mono align-middle">
-                        -
-                      </td>
-
                       {/* 予定工数 */}
                       <td className="px-1 py-1 border-r border-slate-200 text-right align-middle">
                         <input
@@ -1584,11 +1430,6 @@ export const WbsGrid: React.FC<WbsGridProps> = ({
                           }
                           className="w-full bg-transparent hover:bg-slate-100 focus:bg-white border border-transparent hover:border-slate-300 focus:border-indigo-500 rounded px-1 py-0.5 text-xs font-mono text-right text-slate-800 focus:outline-hidden"
                         />
-                      </td>
-
-                      {/* 生産性（工程は機能単位集計のため - 表示） */}
-                      <td className="px-2 py-1 border-r border-slate-200 text-center text-slate-300 text-xs font-mono align-middle">
-                        -
                       </td>
 
                       {/* 期間（開始予定日 / 終了予定日を1列で上下表示） */}

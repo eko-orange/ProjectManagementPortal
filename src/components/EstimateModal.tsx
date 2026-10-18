@@ -29,6 +29,9 @@ interface EstimateModalProps {
   processPatterns?: ProcessStructurePattern[];
 }
 
+// 概算金額の表示制御（将来の権限ロール実装時に権限チェックで有効化。現在は非表示）
+const SHOW_ESTIMATE_AMOUNTS = false;
+
 export const EstimateModal: React.FC<EstimateModalProps> = ({
   isOpen,
   onClose,
@@ -859,7 +862,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
               </div>
 
               {/* 工数単位 ＆ 想定単価 */}
-              <div className="grid grid-cols-2 gap-2">
+              <div className={`grid ${SHOW_ESTIMATE_AMOUNTS ? 'grid-cols-2' : 'grid-cols-1'} gap-2`}>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
                     工数単位
@@ -873,19 +876,21 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                     <option value="人時">人時 (時間単位)</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    単価 (円/{workloadUnit})
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    step="1000"
-                    value={unitPrice}
-                    onChange={(e) => handleUnitPriceChange(Math.max(1, parseInt(e.target.value, 10) || 50000))}
-                    className="w-full px-2.5 py-2 text-xs font-mono font-semibold text-slate-800 bg-white border border-slate-300 rounded-lg focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
-                  />
-                </div>
+                {SHOW_ESTIMATE_AMOUNTS && (
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      単価 (円/{workloadUnit})
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      step="1000"
+                      value={unitPrice}
+                      onChange={(e) => handleUnitPriceChange(Math.max(1, parseInt(e.target.value, 10) || 50000))}
+                      className="w-full px-2.5 py-2 text-xs font-mono font-semibold text-slate-800 bg-white border border-slate-300 rounded-lg focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -930,7 +935,9 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                     <th className="py-2.5 px-2 w-24 text-right">Step数 (行)</th>
                     <th className="py-2.5 px-2 w-32 text-right">概算工数({workloadUnit})</th>
                     <th className="py-2.5 px-2 w-24 text-right">想定生産性</th>
-                    <th className="py-2.5 px-2 w-28 text-right">概算金額(円)</th>
+                    {SHOW_ESTIMATE_AMOUNTS && (
+                      <th className="py-2.5 px-2 w-28 text-right">概算金額(円)</th>
+                    )}
                     <th className="py-2.5 px-1.5 w-10 text-center">操作</th>
                   </tr>
                 </thead>
@@ -1090,9 +1097,11 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                           </td>
 
                           {/* 概算金額 */}
-                          <td className="py-2 px-2 text-right font-mono text-xs font-bold text-slate-900 align-top pt-2.5">
-                            ¥{(f.estimatedAmount || f.estimatedWorkload * unitPrice).toLocaleString()}
-                          </td>
+                          {SHOW_ESTIMATE_AMOUNTS && (
+                            <td className="py-2 px-2 text-right font-mono text-xs font-bold text-slate-900 align-top pt-2.5">
+                              ¥{(f.estimatedAmount || f.estimatedWorkload * unitPrice).toLocaleString()}
+                            </td>
+                          )}
 
                           {/* 削除 */}
                           <td className="py-2 px-1.5 text-center align-top pt-2.5">
@@ -1110,7 +1119,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                         {/* 展開時：工程登録・内訳編集サブテーブル */}
                         {isExpanded && (
                           <tr className="bg-slate-50/90 border-b border-indigo-100">
-                            <td colSpan={9} className="p-3 pl-6 pr-4">
+                            <td colSpan={SHOW_ESTIMATE_AMOUNTS ? 9 : 8} className="p-3 pl-6 pr-4">
                               <div className="bg-white rounded-xl border border-indigo-200 shadow-xs overflow-hidden">
                                 {/* 工程ヘッダーバー */}
                                 <div className="px-4 py-2.5 bg-gradient-to-r from-indigo-50 via-slate-50 to-indigo-50 border-b border-indigo-100 flex flex-wrap items-center justify-between gap-2">
@@ -1183,8 +1192,12 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                                           <th className="py-2 px-3 min-w-[160px]">工程名 <span className="text-rose-500">*</span></th>
                                           <th className="py-2 px-2 w-36">工程担当者</th>
                                           <th className="py-2 px-2 w-28 text-right">工数 ({workloadUnit})</th>
-                                          <th className="py-2 px-2 w-28 text-right">単価 (円/{workloadUnit})</th>
-                                          <th className="py-2 px-3 w-28 text-right">金額 (円)</th>
+                                          {SHOW_ESTIMATE_AMOUNTS && (
+                                            <>
+                                              <th className="py-2 px-2 w-28 text-right">単価 (円/{workloadUnit})</th>
+                                              <th className="py-2 px-3 w-28 text-right">金額 (円)</th>
+                                            </>
+                                          )}
                                           <th className="py-2 px-3">備考・作業内容</th>
                                           <th className="py-2 px-2 w-10 text-center">削除</th>
                                         </tr>
@@ -1242,25 +1255,29 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                                             </td>
 
                                             {/* 単価 */}
-                                            <td className="py-1.5 px-2 text-right font-mono text-[11px] text-slate-600">
-                                              <input
-                                                type="number"
-                                                min="1"
-                                                step="1000"
-                                                value={proc.unitPrice || unitPrice}
-                                                onChange={(e) =>
-                                                  handleUpdateProcess(idx, pIdx, {
-                                                    unitPrice: Math.max(1, parseInt(e.target.value, 10) || 0),
-                                                  })
-                                                }
-                                                className="w-full px-2 py-1 text-right font-mono text-xs text-slate-700 bg-white border border-slate-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
-                                              />
-                                            </td>
+                                            {SHOW_ESTIMATE_AMOUNTS && (
+                                              <td className="py-1.5 px-2 text-right font-mono text-[11px] text-slate-600">
+                                                <input
+                                                  type="number"
+                                                  min="1"
+                                                  step="1000"
+                                                  value={proc.unitPrice || unitPrice}
+                                                  onChange={(e) =>
+                                                    handleUpdateProcess(idx, pIdx, {
+                                                      unitPrice: Math.max(1, parseInt(e.target.value, 10) || 0),
+                                                    })
+                                                  }
+                                                  className="w-full px-2 py-1 text-right font-mono text-xs text-slate-700 bg-white border border-slate-300 rounded focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                                />
+                                              </td>
+                                            )}
 
                                             {/* 金額 */}
-                                            <td className="py-1.5 px-3 text-right font-mono text-xs font-bold text-slate-900">
-                                              ¥{(proc.amount || Math.round(proc.workload * (proc.unitPrice || unitPrice))).toLocaleString()}
-                                            </td>
+                                            {SHOW_ESTIMATE_AMOUNTS && (
+                                              <td className="py-1.5 px-3 text-right font-mono text-xs font-bold text-slate-900">
+                                                ¥{(proc.amount || Math.round(proc.workload * (proc.unitPrice || unitPrice))).toLocaleString()}
+                                              </td>
+                                            )}
 
                                             {/* 備考 */}
                                             <td className="py-1.5 px-3">
@@ -1295,13 +1312,17 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                                           <td className="py-2.5 px-2 text-right font-mono text-indigo-700 font-bold text-sm bg-indigo-50/50">
                                             {f.estimatedWorkload} {workloadUnit}
                                           </td>
-                                          <td className="py-2.5 px-2 text-right text-slate-500 text-[11px]">
-                                            金額合計:
-                                          </td>
-                                          <td className="py-2.5 px-3 text-right font-mono text-indigo-950 font-bold text-sm bg-indigo-50/50">
-                                            ¥{(f.estimatedAmount || 0).toLocaleString()}
-                                          </td>
-                                          <td colSpan={2} className="py-2.5 px-3 text-right">
+                                          {SHOW_ESTIMATE_AMOUNTS && (
+                                            <>
+                                              <td className="py-2.5 px-2 text-right text-slate-500 text-[11px]">
+                                                金額合計:
+                                              </td>
+                                              <td className="py-2.5 px-3 text-right font-mono text-indigo-950 font-bold text-sm bg-indigo-50/50">
+                                                ¥{(f.estimatedAmount || 0).toLocaleString()}
+                                              </td>
+                                            </>
+                                          )}
+                                          <td colSpan={SHOW_ESTIMATE_AMOUNTS ? 2 : 1} className="py-2.5 px-3 text-right">
                                             <button
                                               type="button"
                                               onClick={() => handleClearProcesses(idx)}
@@ -1384,22 +1405,31 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                   )}
                 </span>
               </div>
-              <div className="flex items-center justify-between text-slate-600">
-                <span>小計 (税抜):</span>
-                <span className="font-mono text-slate-800 font-semibold">
-                  ¥{summary.subtotal.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex items-center justify-between text-slate-500 text-[11px]">
-                <span>消費税 ({(taxRate * 100).toFixed(0)}%):</span>
-                <span className="font-mono">¥{summary.taxAmount.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center justify-between pt-2 border-t-2 border-slate-300 text-sm font-bold text-slate-900">
-                <span>概算見積合計 (税込):</span>
-                <span className="font-mono text-indigo-900 text-base">
-                  ¥{summary.totalAmount.toLocaleString()}
-                </span>
-              </div>
+              {SHOW_ESTIMATE_AMOUNTS ? (
+                <>
+                  <div className="flex items-center justify-between text-slate-600">
+                    <span>小計 (税抜):</span>
+                    <span className="font-mono text-slate-800 font-semibold">
+                      ¥{summary.subtotal.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-slate-500 text-[11px]">
+                    <span>消費税 ({(taxRate * 100).toFixed(0)}%):</span>
+                    <span className="font-mono">¥{summary.taxAmount.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t-2 border-slate-300 text-sm font-bold text-slate-900">
+                    <span>概算見積合計 (税込):</span>
+                    <span className="font-mono text-indigo-900 text-base">
+                      ¥{summary.totalAmount.toLocaleString()}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="pt-2 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between">
+                  <span className="text-slate-500 font-medium">概算金額表示:</span>
+                  <span className="text-slate-400 font-normal">（閲覧権限設定により現在非表示）</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

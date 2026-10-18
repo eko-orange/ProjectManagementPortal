@@ -113,7 +113,20 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const today = getTodayString();
   const [isMasterMenuOpen, setIsMasterMenuOpen] = useState(false);
+  const [menuCoords, setMenuCoords] = useState<{ top: number; left: number }>({ top: 48, left: 12 });
   const masterMenuRef = useRef<HTMLDivElement>(null);
+
+  const handleToggleMasterMenu = () => {
+    if (!isMasterMenuOpen && masterMenuRef.current) {
+      const rect = masterMenuRef.current.getBoundingClientRect();
+      const menuWidth = 288;
+      // Clamp horizontally so it stays within viewport with at least 8px margin on both sides
+      const safeLeft = Math.max(8, Math.min(rect.left, window.innerWidth - menuWidth - 8));
+      const safeTop = rect.bottom + 6;
+      setMenuCoords({ top: safeTop, left: safeLeft });
+    }
+    setIsMasterMenuOpen((prev) => !prev);
+  };
 
   // マスタ管理メニューの外側クリック検知
   useEffect(() => {
@@ -276,9 +289,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative" ref={masterMenuRef}>
             <button
               type="button"
-              onClick={() => setIsMasterMenuOpen((prev) => !prev)}
+              onClick={handleToggleMasterMenu}
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-100 hover:text-white border border-slate-700 hover:border-indigo-400 text-[11px] font-semibold transition-colors cursor-pointer shadow-2xs"
-              title="マスタ設定（担当者・休日）およびCSV管理（取り込み・出力）"
+              title="マスタ設定（担当者・工程・休日・会議枠）およびCSV管理（取り込み・出力）"
             >
               <Database className="w-3.5 h-3.5 text-indigo-400" />
               <span>マスタ管理</span>
@@ -290,7 +303,18 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {isMasterMenuOpen && (
-              <div className="absolute right-0 mt-1.5 w-72 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 z-50 animate-in fade-in zoom-in-95 duration-100 text-slate-800">
+              <div
+                style={{
+                  position: 'fixed',
+                  top: `${menuCoords.top}px`,
+                  left: `${menuCoords.left}px`,
+                  width: '288px',
+                  maxHeight: 'calc(100vh - 80px)',
+                  overflowY: 'auto',
+                  zIndex: 9999,
+                }}
+                className="bg-white rounded-xl shadow-2xl border border-slate-200 py-2 animate-in fade-in zoom-in-95 duration-100 text-slate-800"
+              >
                 {/* セクション1：マスタ設定 */}
                 <div className="px-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   マスタ設定
@@ -723,60 +747,6 @@ export const Header: React.FC<HeaderProps> = ({
                   <span>未着手</span>
                 </span>
               )}
-            </div>
-          </div>
-
-          <div className="h-7 w-px bg-slate-200"></div>
-
-          {/* プロジェクト全体のStep数 ＆ 生産性 */}
-          <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-              Step数 / 生産性
-            </span>
-            <div className="flex items-center gap-2 mt-0.5">
-              <div
-                className="flex items-center gap-1"
-                title={`プロジェクト総Step数: ${projectSummary.totalStepCount ? projectSummary.totalStepCount.toLocaleString() : 0} Step`}
-              >
-                <span className="text-[10px] px-1 py-0.2 rounded bg-indigo-100 text-indigo-700 font-semibold">
-                  Step
-                </span>
-                <span className="font-mono text-xs font-bold text-slate-800">
-                  {projectSummary.totalStepCount > 0 ? projectSummary.totalStepCount.toLocaleString() : '-'}
-                </span>
-              </div>
-              <span className="text-slate-300 text-xs">/</span>
-              <div
-                className="flex items-center gap-1"
-                title={
-                  projectSummary.totalStepCount > 0
-                    ? `生産性 (Step/${settings.workloadUnit}): 実績 ${projectSummary.actualProductivity ?? '-'} / 予定 ${projectSummary.plannedProductivity ?? '-'}`
-                    : 'Step未入力'
-                }
-              >
-                <span className="text-[10px] px-1 py-0.2 rounded bg-emerald-100 text-emerald-800 font-semibold">
-                  生産性
-                </span>
-                <span className="font-mono text-xs font-bold text-emerald-700">
-                  {projectSummary.totalStepCount > 0 ? (
-                    projectSummary.actualProductivity !== undefined ? (
-                      `${projectSummary.actualProductivity}`
-                    ) : projectSummary.plannedProductivity !== undefined ? (
-                      `予:${projectSummary.plannedProductivity}`
-                    ) : (
-                      '-'
-                    )
-                  ) : (
-                    '-'
-                  )}
-                  {projectSummary.totalStepCount > 0 &&
-                    (projectSummary.actualProductivity !== undefined || projectSummary.plannedProductivity !== undefined) && (
-                      <span className="text-[10px] font-normal text-slate-500 ml-0.5">
-                        Step/{settings.workloadUnit}
-                      </span>
-                    )}
-                </span>
-              </div>
             </div>
           </div>
         </div>

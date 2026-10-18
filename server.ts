@@ -840,6 +840,12 @@ app.post('/api/estimates/:id/link-project', (req, res) => {
     // 各機能・工程を開始日（estimate.startDate）から自動スケジュール
     let cumulativeUsageMap: Record<string, number> = {};
 
+    // プロジェクト・会社の定例会設定を取得
+    const linkMeetingHours =
+      currentStore.projects.find(
+        (p) => p.settings?.weeklyMeetingHours && Object.keys(p.settings.weeklyMeetingHours).length > 0
+      )?.settings?.weeklyMeetingHours || INITIAL_SETTINGS.weeklyMeetingHours;
+
     const newFeatures: Feature[] = (estimate.features || []).map((ef, fIdx) => {
       const featId = `feat-${newProjId}-${fIdx + 1}`;
       const totalPatDays = defaultPattern.processes.reduce((sum, p) => sum + (p.defaultDays || 1), 0);
@@ -892,7 +898,7 @@ app.post('/api/estimates/:id/link-project', (req, res) => {
         projectMembers,
         estimate.workloadUnit || '人日',
         8,
-        undefined,
+        linkMeetingHours,
         { existingUsageMap: cumulativeUsageMap }
       );
 
@@ -926,6 +932,7 @@ app.post('/api/estimates/:id/link-project', (req, res) => {
         projectName: estimate.title,
         manager: estimate.manager || '田中 敏夫',
         workloadUnit: estimate.workloadUnit || '人日',
+        weeklyMeetingHours: linkMeetingHours,
         baselineDate: projectStartDate,
         showLightningLine: true,
         showBurnDown: false,
@@ -956,40 +963,133 @@ app.post('/api/estimates/:id/link-project', (req, res) => {
 
 // 1. WBS進捗・プロジェクト取り込み
 app.post('/api/import/wbs', (req, res) => {
-  const { projects: importedProjects, mode = 'append', targetProjectId, workloadUnit, syncWorkloadUnit = true } = req.body;
+  const {
+    projects: importedProjects,
+    mode = 'append',
+    targetProjectId,
+    workloadUnit,
+    syncWorkloadUnit = true,
+    weeklyMeetingHours: reqMeetingHours,
+  } = req.body;
 
   if (!Array.isArray(importedProjects) || importedProjects.length === 0) {
     return res.status(400).json({ error: '取り込み対象のプロジェクトデータがありません' });
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  const commonMembers = currentStore.projects[0]?.members || INITIAL_MEMBERS;
-  const commonHolidays = currentStore.projects[0]?.holidays || INITIAL_HOLIDAYS;
+  const commonMembers =
+    currentStore.projects[0]?.members && currentStore.projects[0].members.length > 0
+      ? currentStore.projects[0].members
+      : INITIAL_MEMBERS;
+  const commonHolidays =
+    currentStore.projects[0]?.holidays && currentStore.projects[0].holidays.length > 0
+      ? currentStore.projects[0].holidays
+      : INITIAL_HOLIDAYS;
+
+  // 定例会・会議時間設定の解決（要求パラメータ > 既存プロジェクト設定 > 初期設定）
+  const commonMeetingHours =
+    (reqMeetingHours && Object.keys(reqMeetingHours).length > 0 ? reqMeetingHours : null) ||
+    currentStore.projects.find(
+      (p) => p.settings?.weeklyMeetingHours && Object.keys(p.settings.weeklyMeetingHours).length > 0
+    )?.settings?.weeklyMeetingHours ||
+    INITIAL_SETTINGS.weeklyMeetingHours;
+
+  // プロジェクトの全機能を定例会・会議枠を厳密に考慮して自動リスケジュールする内部関数
+  function scheduleProjectFeatures(
+    project: Project,
+    pMeetingHours: { [dayOfWeek: number]: number },
+    usageMap: Record<string, number>
+  ): { scheduledProject: Project; finalUsageMap: Record<string, number> } {
+    const wUnit = workloadUnit || project.settings?.workloadUnit || '人日';
+    const hPerDay = project.settings?.hoursPerDay || 8;
+    const pHolidays = project.holidays && project.holidays.length > 0 ? project.holidays : commonHolidays;
+    const pMembers = project.members && project.members.length > 0 ? project.members : commonMembers;
+
+    let curUsage = { ...usageMap };
+
+    const newFeatures = (project.features || []).map((feat) => {
+      if (!feat.processes || feat.processes.length === 0) return feat;
+
+      const firstProc = feat.processes[0];
+      const featStart = firstProc?.startDate || project.settings?.baselineDate || today;
+
+      const sched = autoScheduleProcesses(
+        featStart,
+        feat.processes,
+        pHolidays,
+        pMembers,
+        wUnit,
+        hPerDay,
+        pMeetingHours,
+        { existingUsageMap: curUsage }
+      );
+
+      curUsage = sched.finalUsageMap || curUsage;
+
+      return {
+        ...feat,
+        processes: sched.scheduledProcesses,
+      };
+    });
+
+    return {
+      scheduledProject: {
+        ...project,
+        settings: {
+          ...INITIAL_SETTINGS,
+          ...project.settings,
+          projectName: project.name,
+          manager: project.manager || '田中 敏夫',
+          workloadUnit: wUnit,
+          hoursPerDay: hPerDay,
+          weeklyMeetingHours: pMeetingHours,
+        },
+        features: newFeatures,
+        members: JSON.parse(JSON.stringify(pMembers)),
+        holidays: JSON.parse(JSON.stringify(pHolidays)),
+        updatedAt: today,
+      },
+      finalUsageMap: curUsage,
+    };
+  }
 
   if (mode === 'replace') {
     // 全プロジェクトを総入れ替え
-    const newProjects: Project[] = importedProjects.map((p, idx) => ({
-      ...p,
-      id: p.id || `proj-imp-${Date.now()}-${idx + 1}`,
-      createdAt: p.createdAt || today,
-      updatedAt: today,
-      settings: {
-        ...p.settings,
-        workloadUnit: workloadUnit || p.settings?.workloadUnit || '人日',
-      },
-      members: JSON.parse(JSON.stringify(commonMembers)),
-      holidays: JSON.parse(JSON.stringify(commonHolidays)),
-      snapshots: [],
-    }));
+    let cumulativeUsage: Record<string, number> = {};
+    const newProjects: Project[] = [];
+
+    importedProjects.forEach((p, idx) => {
+      const pMeeting =
+        (p.settings?.weeklyMeetingHours && Object.keys(p.settings.weeklyMeetingHours).length > 0
+          ? p.settings.weeklyMeetingHours
+          : null) || commonMeetingHours;
+
+      const baseProj: Project = {
+        ...p,
+        id: p.id || `proj-imp-${Date.now()}-${idx + 1}`,
+        createdAt: p.createdAt || today,
+        updatedAt: today,
+        snapshots: [],
+      };
+      const { scheduledProject, finalUsageMap } = scheduleProjectFeatures(baseProj, pMeeting, cumulativeUsage);
+      cumulativeUsage = finalUsageMap;
+      newProjects.push(scheduledProject);
+    });
 
     currentStore.projects = newProjects;
-    currentStore.activeProjectId = newProjects[0].id;
+    currentStore.activeProjectId = newProjects[0]?.id || '';
     saveStore(currentStore);
     return res.json({ success: true, count: newProjects.length, store: currentStore });
   } else {
     // 既存データに追加・マージ (append)
+    let cumulativeUsage: Record<string, number> = {};
+
     importedProjects.forEach((impProj) => {
-      // 同名プロジェクトがあるか
+      const pMeeting =
+        (impProj.settings?.weeklyMeetingHours && Object.keys(impProj.settings.weeklyMeetingHours).length > 0
+          ? impProj.settings.weeklyMeetingHours
+          : null) || commonMeetingHours;
+
       const existingIdx = currentStore.projects.findIndex(
         (p) => p.name.trim().toLowerCase() === impProj.name.trim().toLowerCase()
       );
@@ -1002,10 +1102,15 @@ app.post('/api/import/wbs', (req, res) => {
         // 工数単位の同期
         if (syncWorkloadUnit && (impProj.settings?.workloadUnit || workloadUnit)) {
           if (!target.settings) {
-            target.settings = { ...impProj.settings };
+            target.settings = { ...INITIAL_SETTINGS, projectName: target.name };
           }
           target.settings.workloadUnit = impProj.settings?.workloadUnit || workloadUnit || target.settings.workloadUnit;
         }
+
+        if (!target.settings) {
+          target.settings = { ...INITIAL_SETTINGS, projectName: target.name };
+        }
+        target.settings.weeklyMeetingHours = target.settings.weeklyMeetingHours || pMeeting;
 
         (impProj.features || []).forEach((impFeat: Feature) => {
           const featIdx = target.features.findIndex((f) => f.name.trim() === impFeat.name.trim());
@@ -1031,10 +1136,18 @@ app.post('/api/import/wbs', (req, res) => {
             });
           }
         });
-        target.updatedAt = today;
+
+        // 定例会・会議時間設定をクリアせずに自動リスケジュール
+        const { scheduledProject, finalUsageMap } = scheduleProjectFeatures(
+          target,
+          target.settings.weeklyMeetingHours || pMeeting,
+          cumulativeUsage
+        );
+        cumulativeUsage = finalUsageMap;
+        currentStore.projects[existingIdx] = scheduledProject;
       } else {
         // 新規プロジェクトとして追加
-        currentStore.projects.push({
+        const baseProj: Project = {
           ...impProj,
           id: impProj.id || `proj-imp-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
           createdAt: today,
@@ -1042,7 +1155,10 @@ app.post('/api/import/wbs', (req, res) => {
           members: JSON.parse(JSON.stringify(commonMembers)),
           holidays: JSON.parse(JSON.stringify(commonHolidays)),
           snapshots: [],
-        });
+        };
+        const { scheduledProject, finalUsageMap } = scheduleProjectFeatures(baseProj, pMeeting, cumulativeUsage);
+        cumulativeUsage = finalUsageMap;
+        currentStore.projects.push(scheduledProject);
       }
     });
 

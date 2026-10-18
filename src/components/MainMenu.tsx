@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FolderKanban,
   Calculator,
@@ -21,6 +21,7 @@ import {
   FileSpreadsheet,
   Building2,
   UserCheck,
+  Database,
 } from 'lucide-react';
 import { Project, Estimate, Member, Holiday, ProcessStructurePattern } from '../types';
 
@@ -37,6 +38,9 @@ interface MainMenuProps {
   onOpenMemberMaster: () => void;
   onOpenHolidayModal: () => void;
   onOpenProcessStructureModal: () => void;
+  onOpenMeetingHours?: () => void;
+  onExportProcessStructureCsv?: () => void;
+  onExportHolidaysCsv?: () => void;
   onOpenImportData: (tab?: 'wbs' | 'members' | 'holidays' | 'process_structure') => void;
   onExportMembersCsv: () => void;
   onOpenResetDemoModal: () => void;
@@ -56,6 +60,9 @@ export const MainMenu: React.FC<MainMenuProps> = ({
   onOpenMemberMaster,
   onOpenHolidayModal,
   onOpenProcessStructureModal,
+  onOpenMeetingHours,
+  onExportProcessStructureCsv,
+  onExportHolidaysCsv,
   onOpenImportData,
   onExportMembersCsv,
   onOpenResetDemoModal,
@@ -380,69 +387,197 @@ export const MainMenu: React.FC<MainMenuProps> = ({
               </div>
             </div>
 
-            {/* 3. 担当者マスタ管理カード（メインメニューに移動） */}
-            <div className="bg-white rounded-2xl border-2 border-slate-200 hover:border-purple-500/80 transition-all duration-200 shadow-sm hover:shadow-lg flex flex-col overflow-hidden group">
+            {/* 3. マスタ管理カード（全マスタ機能の集約ハブ） */}
+            <div className="bg-white rounded-2xl border-2 border-slate-200 hover:border-indigo-500/80 transition-all duration-200 shadow-sm hover:shadow-lg flex flex-col overflow-hidden group">
               <div className="p-6 flex-1 space-y-4">
                 <div className="flex items-start justify-between">
-                  <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 flex items-center justify-center group-hover:scale-105 transition-transform">
-                    <Users className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Database className="w-6 h-6" />
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold border border-purple-100">
-                    メインメニュー移動
+                  <span className="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-indigo-500" />
+                    <span>全マスタ機能 集約</span>
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-purple-600 transition-colors">
-                    担当者マスタ管理
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                    マスタ管理
                   </h3>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    全社の担当者、役職（9段階）、1日の稼働時間、有給・特別休暇の統合管理。CSV取り込み・出力もここから実行できます。
+                    担当者マスタ・工程構成パターン・休日カレンダー・定例会議枠など、システム内の全マスタ機能を集約・一元管理します。
                   </p>
                 </div>
 
-                {/* メンバー構成情報 */}
-                <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 space-y-2 text-xs">
-                  <div className="flex items-center justify-between font-semibold text-slate-700">
-                    <span>登録メンバー数:</span>
-                    <span className="font-mono">{members.length}名</span>
+                {/* 集約マスタ一覧グリッド */}
+                <div className="space-y-2.5 text-xs">
+                  {/* ① 担当者マスタ */}
+                  <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 font-bold text-slate-800">
+                        <Users className="w-4 h-4 text-purple-600" />
+                        <span>担当者マスタ</span>
+                      </div>
+                      <span className="font-mono text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-full text-[11px] font-bold">
+                        {members.length}名登録
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-500 flex items-center justify-between">
+                      <span>役職9段階・稼働時間・個別有給</span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => onOpenImportData('members')}
+                          className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer"
+                          title="担当者CSV取込"
+                        >
+                          取込
+                        </button>
+                        <button
+                          type="button"
+                          onClick={onExportMembersCsv}
+                          className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer"
+                          title="担当者CSV出力"
+                        >
+                          出力
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-1 text-[11px] text-slate-600 pt-1 border-t border-slate-200">
-                    <div>執行役員・本部長: <strong>{members.filter(m => ['執行役員', '本部長', '副本部長'].includes(m.role)).length}名</strong></div>
-                    <div>部長・課長 (PM): <strong>{members.filter(m => ['部長', '課長'].includes(m.role)).length}名</strong></div>
-                    <div>主任・担当: <strong>{members.filter(m => ['主任', '担当'].includes(m.role)).length}名</strong></div>
-                    <div>研修生: <strong>{members.filter(m => m.role === '研修生').length}名</strong></div>
+
+                  {/* ② 工程構成パターンマスタ */}
+                  <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 font-bold text-slate-800">
+                        <Workflow className="w-4 h-4 text-emerald-600" />
+                        <span>工程構成マスタ</span>
+                      </div>
+                      <span className="font-mono text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full text-[11px] font-bold">
+                        {processPatterns.length}パターン定義
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-500 flex items-center justify-between">
+                      <span>初期工程・工数配分比率</span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => onOpenImportData('process_structure')}
+                          className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer"
+                          title="工程構成CSV取込"
+                        >
+                          取込
+                        </button>
+                        {onExportProcessStructureCsv && (
+                          <button
+                            type="button"
+                            onClick={onExportProcessStructureCsv}
+                            className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer"
+                            title="工程構成CSV出力"
+                          >
+                            出力
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 pt-1 border-t border-slate-200">
-                    <button
-                      type="button"
-                      onClick={() => onOpenImportData('members')}
-                      className="flex-1 py-1 px-2 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
-                    >
-                      <Upload className="w-3 h-3 text-slate-500" />
-                      <span>CSV取込</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={onExportMembersCsv}
-                      className="flex-1 py-1 px-2 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer"
-                    >
-                      <Download className="w-3 h-3 text-slate-500" />
-                      <span>CSV出力</span>
-                    </button>
+
+                  {/* ③ 会社休日カレンダー ＆ ④ 会議枠設定（2分割カード） */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 font-bold text-slate-800 text-[11px]">
+                          <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                          <span>休日カレンダー</span>
+                        </div>
+                        <span className="font-mono text-[10px] text-blue-700 font-bold">
+                          {holidays.length}日
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-slate-500">祝日・社内公休日・有給</div>
+                      <div className="flex items-center gap-1 pt-0.5">
+                        <button
+                          type="button"
+                          onClick={() => onOpenImportData('holidays')}
+                          className="flex-1 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer text-center"
+                          title="休日CSV取込"
+                        >
+                          取込
+                        </button>
+                        {onExportHolidaysCsv && (
+                          <button
+                            type="button"
+                            onClick={onExportHolidaysCsv}
+                            className="flex-1 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10px] font-medium transition-colors cursor-pointer text-center"
+                            title="休日CSV出力"
+                          >
+                            出力
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1 flex flex-col justify-between">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 font-bold text-slate-800 text-[11px]">
+                          <Clock className="w-3.5 h-3.5 text-amber-600" />
+                          <span>定例・会議枠</span>
+                        </div>
+                        <span className="font-mono text-[10px] text-amber-700 font-bold">
+                          週次設定
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-slate-500">曜日別定例会議時間・非稼働枠</div>
+                      {onOpenMeetingHours && (
+                        <button
+                          type="button"
+                          onClick={onOpenMeetingHours}
+                          className="w-full py-0.5 rounded bg-white hover:bg-amber-50 border border-slate-200 text-amber-800 text-[10px] font-semibold transition-colors cursor-pointer text-center"
+                        >
+                          会議枠設定
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* カードフッターアクション */}
-              <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center gap-2">
+              {/* カードフッターアクション：各マスタへのクイック起動 */}
+              <div className="p-3.5 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={onOpenMemberMaster}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                  className="py-2 px-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  title="全社の担当者マスタ設定を開く"
                 >
-                  <Users className="w-4 h-4" />
-                  <span>担当者マスタを開く</span>
+                  <Users className="w-3.5 h-3.5" />
+                  <span>担当者マスタ</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onOpenProcessStructureModal}
+                  className="py-2 px-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  title="新規機能展開時の工程構成パターンマスタを開く"
+                >
+                  <Workflow className="w-3.5 h-3.5" />
+                  <span>工程構成マスタ</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onOpenHolidayModal}
+                  className="py-1.5 px-2.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  title="会社休日カレンダーマスタを開く"
+                >
+                  <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                  <span>休日カレンダー</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenImportData('wbs')}
+                  className="py-1.5 px-2.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  title="全マスタ・WBSのCSV一括取込・出力画面を開く"
+                >
+                  <Upload className="w-3.5 h-3.5 text-slate-600" />
+                  <span>CSVマスタ移行</span>
                 </button>
               </div>
             </div>

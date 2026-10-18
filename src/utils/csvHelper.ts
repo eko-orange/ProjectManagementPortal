@@ -1,4 +1,6 @@
 import { Holiday, Member, MemberRole, normalizeMemberRole, ProcessType, Project, Feature, TaskProcess, ProcessStructurePattern, ProcessMasterItem, Estimate, EstimateFeature } from '../types';
+import { autoScheduleProcesses } from './dateUtils';
+import { INITIAL_SETTINGS } from '../data/initialData';
 
 /**
  * RFC 4180準拠のCSV行パーサー
@@ -292,7 +294,10 @@ export function parseWbsCsv(
   csvText: string,
   defaultManager: string = '田中 敏夫',
   workloadUnit: '人日' | '人時' = '人日',
-  hoursPerDay: number = 8
+  hoursPerDay: number = 8,
+  weeklyMeetingHours?: { [dayOfWeek: number]: number },
+  holidays?: Holiday[],
+  members?: Member[]
 ): ParsedWbsResult {
   const allRows = parseCsvText(csvText);
   const errors: string[] = [];
@@ -498,8 +503,14 @@ export function parseWbsCsv(
 
   const today = new Date().toISOString().slice(0, 10);
   const projects: Project[] = [];
+  const meetingHoursToUse =
+    weeklyMeetingHours && Object.keys(weeklyMeetingHours).length > 0
+      ? weeklyMeetingHours
+      : INITIAL_SETTINGS.weeklyMeetingHours;
 
+  let cumulativeUsageMap: Record<string, number> = {};
   let projCounter = 1;
+
   projectMap.forEach((pData, pName) => {
     const projId = `proj-imp-${Date.now()}-${projCounter++}`;
     const features: Feature[] = [];
@@ -507,10 +518,28 @@ export function parseWbsCsv(
 
     pData.featuresMap.forEach((fData, fName) => {
       const featId = `feat-imp-${Date.now()}-${featCounter++}`;
-      const attachedProcesses = fData.processes.map((pr) => ({
+      let attachedProcesses = fData.processes.map((pr) => ({
         ...pr,
         featureId: featId,
       }));
+
+      // 定例会・会議時間設定および休日・稼働枠を考慮した自動リスケジュール
+      if (attachedProcesses.length > 0) {
+        const firstProc = attachedProcesses[0];
+        const featStart = firstProc?.startDate || today;
+        const sched = autoScheduleProcesses(
+          featStart,
+          attachedProcesses,
+          holidays || [],
+          members || [],
+          workloadUnit,
+          hoursPerDay,
+          meetingHoursToUse,
+          { existingUsageMap: cumulativeUsageMap }
+        );
+        cumulativeUsageMap = sched.finalUsageMap || cumulativeUsageMap;
+        attachedProcesses = sched.scheduledProcesses;
+      }
 
       features.push({
         id: featId,
@@ -535,16 +564,39 @@ export function parseWbsCsv(
         manager: defaultManager,
         workloadUnit,
         hoursPerDay,
+        weeklyMeetingHours: meetingHoursToUse,
         baselineDate: today,
         showLightningLine: true,
         showBurnDown: false,
         zoomLevel: 'day',
       },
       features,
-      holidays: [],
-      members: [],
+      holidays: holidays || [],
+      members: members || [],
       snapshots: [],
     });
+  });
+
+  // プレビュー用 parsedRows も定例会設定を反映したリスケ後日程に同期
+  const procDateMap = new Map<string, { startDate: string; endDate: string }>();
+  projects.forEach((proj) => {
+    (proj.features || []).forEach((feat) => {
+      feat.processes.forEach((pr) => {
+        const key = `${proj.name}___${feat.name}___${pr.processType}___${(pr.assignee || '').trim()}`;
+        if (!procDateMap.has(key)) {
+          procDateMap.set(key, { startDate: pr.startDate, endDate: pr.endDate });
+        }
+      });
+    });
+  });
+
+  parsedRows.forEach((row) => {
+    const key = `${row.projectName}___${row.featureName}___${row.processType}___${(row.assignee || '').trim()}`;
+    const dates = procDateMap.get(key);
+    if (dates) {
+      row.startDate = dates.startDate;
+      row.endDate = dates.endDate;
+    }
   });
 
   return {

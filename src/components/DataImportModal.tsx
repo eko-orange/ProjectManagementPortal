@@ -1,4 +1,4 @@
-import React, { useState, useRef, DragEvent, ChangeEvent } from 'react';
+import React, { useState, useRef, useMemo, DragEvent, ChangeEvent } from 'react';
 import {
   Upload,
   FileSpreadsheet,
@@ -18,6 +18,7 @@ import {
   Workflow,
 } from 'lucide-react';
 import { Holiday, Member, Project, ProcessStructurePattern } from '../types';
+import { INITIAL_SETTINGS } from '../data/initialData';
 import {
   parseHolidaysCsv,
   parseMembersCsv,
@@ -47,6 +48,8 @@ export const DataImportModal: React.FC<DataImportModalProps> = ({
   isOpen = true,
   onClose,
   initialTab = 'wbs',
+  holidays,
+  members,
   projects,
   onImportComplete,
 }) => {
@@ -56,6 +59,14 @@ export const DataImportModal: React.FC<DataImportModalProps> = ({
   // 工数単位の選択状態（人日 または 人時）
   const defaultUnit = projects?.[0]?.settings?.workloadUnit || '人日';
   const [workloadUnit, setWorkloadUnit] = useState<'人日' | '人時'>(defaultUnit);
+
+  // 定例会・会議時間設定（既存プロジェクトまたはシステム設定から確実に保持・継承）
+  const effectiveMeetingHours = useMemo(() => {
+    const fromProj = projects?.find(
+      (p) => p.settings?.weeklyMeetingHours && Object.keys(p.settings.weeklyMeetingHours).length > 0
+    )?.settings?.weeklyMeetingHours;
+    return fromProj || INITIAL_SETTINGS.weeklyMeetingHours;
+  }, [projects]);
   const [fileName, setFileName] = useState<string>('');
   const [rawText, setRawText] = useState<string>('');
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -137,7 +148,15 @@ export const DataImportModal: React.FC<DataImportModalProps> = ({
         setParseErrors(result.errors);
         setTotalRowsCount(result.totalRows);
       } else if (tab === 'wbs') {
-        const result = parseWbsCsv(text, '田中 敏夫', unit);
+        const result = parseWbsCsv(
+          text,
+          '田中 敏夫',
+          unit,
+          projects?.[0]?.settings?.hoursPerDay || 8,
+          effectiveMeetingHours,
+          holidays,
+          members
+        );
         setParsedWbsRows(result.rows);
         setParsedProjects(result.projects);
         setParseErrors(result.errors);
@@ -216,7 +235,7 @@ export const DataImportModal: React.FC<DataImportModalProps> = ({
           setIsProcessing(false);
           return;
         }
-        const res = await importWbsApi(parsedProjects, importMode, workloadUnit);
+        const res = await importWbsApi(parsedProjects, importMode, workloadUnit, effectiveMeetingHours);
         if (res.success) {
           onImportComplete(
             'wbs',
